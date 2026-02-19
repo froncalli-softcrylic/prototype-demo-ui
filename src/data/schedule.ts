@@ -8,16 +8,15 @@ export interface ScheduleSlot {
 
 export function generateScheduleData(): ScheduleSlot[] {
     const offices = [
-        { id: 2370, capacity: 0.75, dailySlots: 11 },
-        { id: 2371, capacity: 0.65, dailySlots: 11 },
-        { id: 2372, capacity: 0.62, dailySlots: 13 },
-        { id: 2373, capacity: 0.78, dailySlots: 10 },
-        { id: 2374, capacity: 0.68, dailySlots: 11 },
-        { id: 2375, capacity: 0.72, dailySlots: 11 },
-        { id: 2376, capacity: 0.70, dailySlots: 11 },
-        { id: 2377, capacity: 0.88, dailySlots: 10 },
-        { id: 2378, capacity: 0.82, dailySlots: 10 },
-        { id: 2379, capacity: 0.73, dailySlots: 11 },
+        { id: 1484, capacity: 0.75, dailySlots: 11 },  // Gateway Commons — Scale:0.80
+        { id: 1587, capacity: 0.65, dailySlots: 11 },  // Main Street — Scale:0.60
+        { id: 1603, capacity: 0.78, dailySlots: 10 },  // Colonie — Scale:0.85
+        { id: 1605, capacity: 0.68, dailySlots: 11 },  // Bethlehem — Scale:0.65
+        { id: 1606, capacity: 0.72, dailySlots: 11 },  // Clifton Park — Scale:0.72
+        { id: 1902, capacity: 0.70, dailySlots: 11 },  // Jacksonville — Scale:0.75
+        { id: 2372, capacity: 0.62, dailySlots: 13 },  // St Cloud — Scale:0.55
+        { id: 8329, capacity: 0.88, dailySlots: 10 },  // Woodmont — Scale:1.10
+        { id: 8375, capacity: 0.82, dailySlots: 10 },  // W NY Lancaster — Scale:0.90
     ];
 
     const data: ScheduleSlot[] = [];

@@ -29,7 +29,7 @@ export const scriptedExchanges: ScriptedExchange[] = [
         agentResponse: {
             id: 'agent-1',
             role: 'agent',
-            content: 'Based on current data, 3 offices are flagged as over-invested:\n\n• **Woodmont Family Dentistry** — 88% capacity, spending $19.6K/wk with only 8 open slots. Meta and Google Search incrementality have both dropped below 60%.\n\n• **Western NY Dental Group Lancaster** — 82% capacity, spending $16.8K/wk. Google Search incrementality at 64% and declining.\n\n• **1st Advantage Dental - Colonie** — 78% capacity, spending $15.1K/wk. Approaching saturation on the Google Search response curve.\n\nWoodmont is closest to capacity saturation — additional spend there has diminishing returns on incremental bookings. I recommend reallocating $3.4K/wk from Woodmont to under-invested offices like St Cloud and Main Street where marginal CPA is significantly more efficient.',
+            content: 'Based on current data, 2 offices are flagged as over-invested:\n\n• **Woodmont Family Dentistry** (Tamarac, FL) — 88% capacity, spending $19.6K/wk with only 8 open slots. At the portfolio-wide 82% Google Search incrementality, additional spend has diminishing marginal returns given capacity constraints.\n\n• **Western New York Dental Group Lancaster** (Depew, NY) — 82% capacity, spending $16.0K/wk. High capacity utilization limits the incremental value of new patient bookings.\n\nWoodmont is closest to capacity saturation — additional spend there yields diminishing returns on incremental bookings. I recommend reallocating $3.1K/wk from Woodmont to under-invested offices like St Cloud and Main Street where marginal CPA is significantly more efficient.',
             timestamp: new Date().toISOString(),
         },
     },
@@ -45,7 +45,7 @@ export const scriptedExchanges: ScriptedExchange[] = [
             tableData: {
                 headers: ['Channel', 'Current', 'Recommended', 'Change'],
                 rows: [
-                    ['Google Search', '$6,063', '$8,200', '+$2,137'],
+                    ['Google Search', '$6,064', '$8,200', '+$2,136'],
                     ['Meta', '$4,915', '$3,100', '-$1,815'],
                     ['Programmatic', '$2,521', '$2,900', '+$379'],
                 ],
@@ -68,7 +68,7 @@ export const scriptedExchanges: ScriptedExchange[] = [
         agentResponse: {
             id: 'agent-4',
             role: 'agent',
-            content: "Here are the channels with the lowest incrementality rates across all offices:\n\n• **Meta at Woodmont** — 49% incrementality, CPA $24.80 (above $18 target). Past the diminishing returns point on the response curve.\n\n• **Meta at Western NY** — 52% incrementality, spending $5.4K/wk but generating only 8 incremental bookings.\n\n• **Google Programmatic at Woodmont** — 55% incrementality. The saturation ceiling is lower than other offices due to market maturity.\n\n• **Meta at 1st Advantage Colonie** — 55% incrementality with declining weekly trends.\n\nIn contrast, **Google Search at St Cloud (82%)** and **Google Search at Main Street (79%)** have the highest incrementality and are still well within the efficient range of their response curves.",
+            content: "Here are the channels where capacity constraints make additional spend least efficient:\n\n• **Meta at Woodmont** (Tamarac, FL) — 88% capacity, spending $6.3K/wk. High capacity utilization means limited room for incremental bookings regardless of channel performance.\n\n• **Meta at Western NY Lancaster** (Depew, NY) — 82% capacity, spending $5.3K/wk. Similar capacity constraint limits marginal value.\n\n• **Google Programmatic at Woodmont** — Capacity-constrained office. Lower priority for incremental spend.\n\n• **Meta at 1st Advantage Colonie** (Albany, NY) — 78% capacity, approaching the over-invested threshold.\n\nIn contrast, **Google Search at St Cloud (62% capacity)** and **Google Search at Main Street (65% capacity)** have the most open slots and the strongest incremental potential.",
             timestamp: new Date().toISOString(),
         },
     },
@@ -78,7 +78,7 @@ export const scriptedExchanges: ScriptedExchange[] = [
         agentResponse: {
             id: 'agent-5',
             role: 'agent',
-            content: "**This Week's Optimization Summary:**\n\n📊 **8 recommendations pending** across 5 offices.\n\n**Key themes:**\n1. **Throttle spend at capacity-constrained offices** — Woodmont (88%) and Western NY (82%) are over-invested. Recommend reducing combined spend by $4.4K/wk.\n\n2. **Increase spend at under-utilized offices** — St Cloud (62%), Main Street (65%), and Bethlehem (68%) all have significant open capacity and strong incrementality on Google Search.\n\n3. **Channel rebalancing** — Meta performance is declining at mature offices. Shift toward Google Search where response curves show more efficient marginal CPA.\n\n**Net projected impact:** +10 incremental bookings/week portfolio-wide at 6% lower blended CPA.\n\nWould you like me to walk through any specific office in detail?",
+            content: "**This Week's Optimization Summary:**\n\n📊 **8 recommendations pending** across 5 offices.\n\n**Key themes:**\n1. **Throttle spend at capacity-constrained offices** — Woodmont (88%) and Western NY Lancaster (82%) are over-invested. Recommend reducing combined spend by $3.7K/wk.\n\n2. **Increase spend at under-utilized offices** — St Cloud (62%), Main Street (65%), and Bethlehem (68%) all have significant open capacity and strong incrementality on Google Search.\n\n3. **Channel rebalancing** — Meta performance at capacity-constrained offices shows diminishing marginal returns. Shift toward Google Search and Programmatic at offices with open slots.\n\n**Net projected impact:** +10 incremental bookings/week portfolio-wide at 6% lower blended CPA.\n\nWould you like me to walk through any specific office in detail?",
             timestamp: new Date().toISOString(),
         },
     },
@@ -106,6 +106,6 @@ export function findScriptedResponse(input: string): ScriptedExchange | null {
 export const defaultAgentResponse: ChatMessage = {
     id: 'agent-default',
     role: 'agent',
-    content: "I've analyzed the request. Based on current portfolio data across 10 offices, I can provide insights on spend optimization, capacity utilization, and channel performance. Could you be more specific about which offices or metrics you'd like me to focus on?\n\nYou can ask me things like:\n• Which offices need budget reallocation?\n• Show me underperforming channels\n• Optimize spend for a specific office",
+    content: "I've analyzed the request. Based on current portfolio data across 9 offices, I can provide insights on spend optimization, capacity utilization, and channel performance. Could you be more specific about which offices or metrics you'd like me to focus on?\n\nYou can ask me things like:\n• Which offices need budget reallocation?\n• Show me underperforming channels\n• Optimize spend for a specific office",
     timestamp: new Date().toISOString(),
 };
