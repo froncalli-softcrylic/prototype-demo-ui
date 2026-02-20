@@ -1,10 +1,9 @@
 'use client';
 
 import React, { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
-import { type Office, offices, getInvestmentStatus, type InvestmentStatus } from '@/data/offices';
+import { type Office, offices, getInvestmentStatus } from '@/data/offices';
 import { initialRecommendations, type Recommendation } from '@/data/recommendations';
-import { type ChatMessage, suggestedPrompts } from '@/data/chat-scripts';
-import { getResponseCurvesForOffice } from '@/data/response-curves';
+import { type ChatMessage } from '@/data/chat-scripts';
 
 export type CenterView = 'dashboard' | 'detail' | 'recommendations' | 'trends';
 export type TimeRange = 'this-week' | '14-days' | '30-days' | '90-days';

@@ -87,23 +87,6 @@ export default function ChatPanel() {
                             })}
                         </div>
 
-                        {msg.hasTable && msg.tableData && (
-                            <table className="chat-bubble-table">
-                                <thead>
-                                    <tr>
-                                        {msg.tableData.headers.map(h => <th key={h}>{h}</th>)}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {msg.tableData.rows.map((row, ri) => (
-                                        <tr key={ri}>
-                                            {row.map((cell, ci) => <td key={ci}>{cell}</td>)}
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        )}
-
                         <div className="chat-bubble-timestamp">
                             {new Date(msg.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
                         </div>
