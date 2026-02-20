@@ -1,0 +1,291 @@
+OfficeID,OfficeName,Date,DayOfWeek,IsOpen,MaxSlots,Appointments Open
+2372,St Cloud Dentistry,2/15/2026 0:00,Sunday,FALSE,0,0
+2372,St Cloud Dentistry,2/16/2026 0:00,Monday,TRUE,27,2
+2372,St Cloud Dentistry,2/17/2026 0:00,Tuesday,TRUE,27,5
+2372,St Cloud Dentistry,2/18/2026 0:00,Wednesday,TRUE,27,6
+2372,St Cloud Dentistry,2/19/2026 0:00,Thursday,TRUE,27,5
+2372,St Cloud Dentistry,2/20/2026 0:00,Friday,TRUE,15,4
+2372,St Cloud Dentistry,2/21/2026 0:00,Saturday,FALSE,0,0
+2372,St Cloud Dentistry,2/22/2026 0:00,Sunday,FALSE,0,0
+2372,St Cloud Dentistry,2/23/2026 0:00,Monday,TRUE,27,10
+2372,St Cloud Dentistry,2/24/2026 0:00,Tuesday,TRUE,27,4
+2372,St Cloud Dentistry,2/25/2026 0:00,Wednesday,TRUE,27,6
+2372,St Cloud Dentistry,2/26/2026 0:00,Thursday,TRUE,27,5
+2372,St Cloud Dentistry,2/27/2026 0:00,Friday,TRUE,15,4
+2372,St Cloud Dentistry,2/28/2026 0:00,Saturday,FALSE,0,0
+2372,St Cloud Dentistry,3/1/2026 0:00,Sunday,FALSE,0,0
+2372,St Cloud Dentistry,3/2/2026 0:00,Monday,TRUE,27,10
+2372,St Cloud Dentistry,3/3/2026 0:00,Tuesday,TRUE,27,6
+2372,St Cloud Dentistry,3/4/2026 0:00,Wednesday,TRUE,27,9
+2372,St Cloud Dentistry,3/5/2026 0:00,Thursday,TRUE,27,10
+2372,St Cloud Dentistry,3/6/2026 0:00,Friday,TRUE,15,6
+2372,St Cloud Dentistry,3/7/2026 0:00,Saturday,FALSE,0,0
+2372,St Cloud Dentistry,3/8/2026 0:00,Sunday,FALSE,0,0
+2372,St Cloud Dentistry,3/9/2026 0:00,Monday,TRUE,27,11
+2372,St Cloud Dentistry,3/10/2026 0:00,Tuesday,TRUE,27,13
+2372,St Cloud Dentistry,3/11/2026 0:00,Wednesday,TRUE,27,10
+2372,St Cloud Dentistry,3/12/2026 0:00,Thursday,TRUE,27,14
+2372,St Cloud Dentistry,3/13/2026 0:00,Friday,TRUE,15,6
+2372,St Cloud Dentistry,3/14/2026 0:00,Saturday,FALSE,0,0
+2372,St Cloud Dentistry,3/15/2026 0:00,Sunday,FALSE,0,0
+1484,Dental Care at Gateway Commons,2/15/2026 0:00,Sunday,FALSE,0,0
+1484,Dental Care at Gateway Commons,2/16/2026 0:00,Monday,TRUE,27,7
+1484,Dental Care at Gateway Commons,2/17/2026 0:00,Tuesday,TRUE,30,9
+1484,Dental Care at Gateway Commons,2/18/2026 0:00,Wednesday,TRUE,24,11
+1484,Dental Care at Gateway Commons,2/19/2026 0:00,Thursday,TRUE,30,7
+1484,Dental Care at Gateway Commons,2/20/2026 0:00,Friday,TRUE,27,11
+1484,Dental Care at Gateway Commons,2/21/2026 0:00,Saturday,FALSE,0,0
+1484,Dental Care at Gateway Commons,2/22/2026 0:00,Sunday,FALSE,0,0
+1484,Dental Care at Gateway Commons,2/23/2026 0:00,Monday,TRUE,27,1
+1484,Dental Care at Gateway Commons,2/24/2026 0:00,Tuesday,TRUE,30,9
+1484,Dental Care at Gateway Commons,2/25/2026 0:00,Wednesday,TRUE,24,8
+1484,Dental Care at Gateway Commons,2/26/2026 0:00,Thursday,TRUE,30,9
+1484,Dental Care at Gateway Commons,2/27/2026 0:00,Friday,TRUE,27,12
+1484,Dental Care at Gateway Commons,2/28/2026 0:00,Saturday,FALSE,0,0
+1484,Dental Care at Gateway Commons,3/1/2026 0:00,Sunday,FALSE,0,0
+1484,Dental Care at Gateway Commons,3/2/2026 0:00,Monday,TRUE,27,10
+1484,Dental Care at Gateway Commons,3/3/2026 0:00,Tuesday,TRUE,30,15
+1484,Dental Care at Gateway Commons,3/4/2026 0:00,Wednesday,TRUE,24,12
+1484,Dental Care at Gateway Commons,3/5/2026 0:00,Thursday,TRUE,30,11
+1484,Dental Care at Gateway Commons,3/6/2026 0:00,Friday,TRUE,27,12
+1484,Dental Care at Gateway Commons,3/7/2026 0:00,Saturday,FALSE,0,0
+1484,Dental Care at Gateway Commons,3/8/2026 0:00,Sunday,FALSE,0,0
+1484,Dental Care at Gateway Commons,3/9/2026 0:00,Monday,TRUE,27,13
+1484,Dental Care at Gateway Commons,3/10/2026 0:00,Tuesday,TRUE,30,15
+1484,Dental Care at Gateway Commons,3/11/2026 0:00,Wednesday,TRUE,24,11
+1484,Dental Care at Gateway Commons,3/12/2026 0:00,Thursday,TRUE,30,14
+1484,Dental Care at Gateway Commons,3/13/2026 0:00,Friday,TRUE,27,16
+1484,Dental Care at Gateway Commons,3/14/2026 0:00,Saturday,FALSE,0,0
+1484,Dental Care at Gateway Commons,3/15/2026 0:00,Sunday,FALSE,0,0
+8329,Woodmont Family Dentistry,2/15/2026 0:00,Sunday,FALSE,0,0
+8329,Woodmont Family Dentistry,2/16/2026 0:00,Monday,TRUE,27,5
+8329,Woodmont Family Dentistry,2/17/2026 0:00,Tuesday,TRUE,24,6
+8329,Woodmont Family Dentistry,2/18/2026 0:00,Wednesday,TRUE,24,3
+8329,Woodmont Family Dentistry,2/19/2026 0:00,Thursday,TRUE,24,6
+8329,Woodmont Family Dentistry,2/20/2026 0:00,Friday,TRUE,12,2
+8329,Woodmont Family Dentistry,2/21/2026 0:00,Saturday,FALSE,0,0
+8329,Woodmont Family Dentistry,2/22/2026 0:00,Sunday,FALSE,0,0
+8329,Woodmont Family Dentistry,2/23/2026 0:00,Monday,TRUE,27,7
+8329,Woodmont Family Dentistry,2/24/2026 0:00,Tuesday,TRUE,24,9
+8329,Woodmont Family Dentistry,2/25/2026 0:00,Wednesday,TRUE,24,7
+8329,Woodmont Family Dentistry,2/26/2026 0:00,Thursday,TRUE,24,4
+8329,Woodmont Family Dentistry,2/27/2026 0:00,Friday,TRUE,12,5
+8329,Woodmont Family Dentistry,2/28/2026 0:00,Saturday,FALSE,0,0
+8329,Woodmont Family Dentistry,3/1/2026 0:00,Sunday,FALSE,0,0
+8329,Woodmont Family Dentistry,3/2/2026 0:00,Monday,TRUE,27,8
+8329,Woodmont Family Dentistry,3/3/2026 0:00,Tuesday,TRUE,24,10
+8329,Woodmont Family Dentistry,3/4/2026 0:00,Wednesday,TRUE,24,11
+8329,Woodmont Family Dentistry,3/5/2026 0:00,Thursday,TRUE,24,11
+8329,Woodmont Family Dentistry,3/6/2026 0:00,Friday,TRUE,12,6
+8329,Woodmont Family Dentistry,3/7/2026 0:00,Saturday,FALSE,0,0
+8329,Woodmont Family Dentistry,3/8/2026 0:00,Sunday,FALSE,0,0
+8329,Woodmont Family Dentistry,3/9/2026 0:00,Monday,TRUE,27,14
+8329,Woodmont Family Dentistry,3/10/2026 0:00,Tuesday,TRUE,24,11
+8329,Woodmont Family Dentistry,3/11/2026 0:00,Wednesday,TRUE,24,8
+8329,Woodmont Family Dentistry,3/12/2026 0:00,Thursday,TRUE,24,15
+8329,Woodmont Family Dentistry,3/13/2026 0:00,Friday,TRUE,12,7
+8329,Woodmont Family Dentistry,3/14/2026 0:00,Saturday,FALSE,0,0
+8329,Woodmont Family Dentistry,3/15/2026 0:00,Sunday,FALSE,0,0
+2445,The Crossroads Dental Care,2/15/2026 0:00,Sunday,FALSE,0,0
+2445,The Crossroads Dental Care,2/16/2026 0:00,Monday,TRUE,24,4
+2445,The Crossroads Dental Care,2/17/2026 0:00,Tuesday,TRUE,21,5
+2445,The Crossroads Dental Care,2/18/2026 0:00,Wednesday,TRUE,27,9
+2445,The Crossroads Dental Care,2/19/2026 0:00,Thursday,TRUE,24,4
+2445,The Crossroads Dental Care,2/20/2026 0:00,Friday,TRUE,24,4
+2445,The Crossroads Dental Care,2/21/2026 0:00,Saturday,FALSE,0,0
+2445,The Crossroads Dental Care,2/22/2026 0:00,Sunday,FALSE,0,0
+2445,The Crossroads Dental Care,2/23/2026 0:00,Monday,TRUE,24,8
+2445,The Crossroads Dental Care,2/24/2026 0:00,Tuesday,TRUE,21,11
+2445,The Crossroads Dental Care,2/25/2026 0:00,Wednesday,TRUE,27,6
+2445,The Crossroads Dental Care,2/26/2026 0:00,Thursday,TRUE,24,6
+2445,The Crossroads Dental Care,2/27/2026 0:00,Friday,TRUE,24,8
+2445,The Crossroads Dental Care,2/28/2026 0:00,Saturday,FALSE,0,0
+2445,The Crossroads Dental Care,3/1/2026 0:00,Sunday,FALSE,0,0
+2445,The Crossroads Dental Care,3/2/2026 0:00,Monday,TRUE,24,8
+2445,The Crossroads Dental Care,3/3/2026 0:00,Tuesday,TRUE,21,7
+2445,The Crossroads Dental Care,3/4/2026 0:00,Wednesday,TRUE,27,12
+2445,The Crossroads Dental Care,3/5/2026 0:00,Thursday,TRUE,24,8
+2445,The Crossroads Dental Care,3/6/2026 0:00,Friday,TRUE,24,6
+2445,The Crossroads Dental Care,3/7/2026 0:00,Saturday,FALSE,0,0
+2445,The Crossroads Dental Care,3/8/2026 0:00,Sunday,FALSE,0,0
+2445,The Crossroads Dental Care,3/9/2026 0:00,Monday,TRUE,24,12
+2445,The Crossroads Dental Care,3/10/2026 0:00,Tuesday,TRUE,21,9
+2445,The Crossroads Dental Care,3/11/2026 0:00,Wednesday,TRUE,27,14
+2445,The Crossroads Dental Care,3/12/2026 0:00,Thursday,TRUE,24,12
+2445,The Crossroads Dental Care,3/13/2026 0:00,Friday,TRUE,24,13
+2445,The Crossroads Dental Care,3/14/2026 0:00,Saturday,FALSE,0,0
+2445,The Crossroads Dental Care,3/15/2026 0:00,Sunday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,2/15/2026 0:00,Sunday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,2/16/2026 0:00,Monday,TRUE,27,4
+1902,Today's  Dentistry of Jacksonville,2/17/2026 0:00,Tuesday,TRUE,28,5
+1902,Today's  Dentistry of Jacksonville,2/18/2026 0:00,Wednesday,TRUE,28,5
+1902,Today's  Dentistry of Jacksonville,2/19/2026 0:00,Thursday,TRUE,28,7
+1902,Today's  Dentistry of Jacksonville,2/20/2026 0:00,Friday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,2/21/2026 0:00,Saturday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,2/22/2026 0:00,Sunday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,2/23/2026 0:00,Monday,TRUE,27,10
+1902,Today's  Dentistry of Jacksonville,2/24/2026 0:00,Tuesday,TRUE,28,8
+1902,Today's  Dentistry of Jacksonville,2/25/2026 0:00,Wednesday,TRUE,28,7
+1902,Today's  Dentistry of Jacksonville,2/26/2026 0:00,Thursday,TRUE,28,10
+1902,Today's  Dentistry of Jacksonville,2/27/2026 0:00,Friday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,2/28/2026 0:00,Saturday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,3/1/2026 0:00,Sunday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,3/2/2026 0:00,Monday,TRUE,27,13
+1902,Today's  Dentistry of Jacksonville,3/3/2026 0:00,Tuesday,TRUE,28,8
+1902,Today's  Dentistry of Jacksonville,3/4/2026 0:00,Wednesday,TRUE,28,7
+1902,Today's  Dentistry of Jacksonville,3/5/2026 0:00,Thursday,TRUE,28,11
+1902,Today's  Dentistry of Jacksonville,3/6/2026 0:00,Friday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,3/7/2026 0:00,Saturday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,3/8/2026 0:00,Sunday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,3/9/2026 0:00,Monday,TRUE,27,14
+1902,Today's  Dentistry of Jacksonville,3/10/2026 0:00,Tuesday,TRUE,28,12
+1902,Today's  Dentistry of Jacksonville,3/11/2026 0:00,Wednesday,TRUE,28,15
+1902,Today's  Dentistry of Jacksonville,3/12/2026 0:00,Thursday,TRUE,28,14
+1902,Today's  Dentistry of Jacksonville,3/13/2026 0:00,Friday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,3/14/2026 0:00,Saturday,FALSE,0,0
+1902,Today's  Dentistry of Jacksonville,3/15/2026 0:00,Sunday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,2/15/2026 0:00,Sunday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,2/16/2026 0:00,Monday,TRUE,21,5
+8375,Western New York Dental Group Lancaster,2/17/2026 0:00,Tuesday,TRUE,24,4
+8375,Western New York Dental Group Lancaster,2/18/2026 0:00,Wednesday,TRUE,21,1
+8375,Western New York Dental Group Lancaster,2/19/2026 0:00,Thursday,TRUE,24,8
+8375,Western New York Dental Group Lancaster,2/20/2026 0:00,Friday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,2/21/2026 0:00,Saturday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,2/22/2026 0:00,Sunday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,2/23/2026 0:00,Monday,TRUE,21,10
+8375,Western New York Dental Group Lancaster,2/24/2026 0:00,Tuesday,TRUE,24,7
+8375,Western New York Dental Group Lancaster,2/25/2026 0:00,Wednesday,TRUE,21,7
+8375,Western New York Dental Group Lancaster,2/26/2026 0:00,Thursday,TRUE,24,9
+8375,Western New York Dental Group Lancaster,2/27/2026 0:00,Friday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,2/28/2026 0:00,Saturday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,3/1/2026 0:00,Sunday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,3/2/2026 0:00,Monday,TRUE,21,8
+8375,Western New York Dental Group Lancaster,3/3/2026 0:00,Tuesday,TRUE,24,12
+8375,Western New York Dental Group Lancaster,3/4/2026 0:00,Wednesday,TRUE,21,11
+8375,Western New York Dental Group Lancaster,3/5/2026 0:00,Thursday,TRUE,24,12
+8375,Western New York Dental Group Lancaster,3/6/2026 0:00,Friday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,3/7/2026 0:00,Saturday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,3/8/2026 0:00,Sunday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,3/9/2026 0:00,Monday,TRUE,21,9
+8375,Western New York Dental Group Lancaster,3/10/2026 0:00,Tuesday,TRUE,24,13
+8375,Western New York Dental Group Lancaster,3/11/2026 0:00,Wednesday,TRUE,21,11
+8375,Western New York Dental Group Lancaster,3/12/2026 0:00,Thursday,TRUE,24,13
+8375,Western New York Dental Group Lancaster,3/13/2026 0:00,Friday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,3/14/2026 0:00,Saturday,FALSE,0,0
+8375,Western New York Dental Group Lancaster,3/15/2026 0:00,Sunday,FALSE,0,0
+1587,Main Street Dentistry,2/15/2026 0:00,Sunday,FALSE,0,0
+1587,Main Street Dentistry,2/16/2026 0:00,Monday,TRUE,27,7
+1587,Main Street Dentistry,2/17/2026 0:00,Tuesday,TRUE,27,6
+1587,Main Street Dentistry,2/18/2026 0:00,Wednesday,TRUE,27,7
+1587,Main Street Dentistry,2/19/2026 0:00,Thursday,TRUE,27,5
+1587,Main Street Dentistry,2/20/2026 0:00,Friday,FALSE,0,0
+1587,Main Street Dentistry,2/21/2026 0:00,Saturday,FALSE,0,0
+1587,Main Street Dentistry,2/22/2026 0:00,Sunday,FALSE,0,0
+1587,Main Street Dentistry,2/23/2026 0:00,Monday,TRUE,27,6
+1587,Main Street Dentistry,2/24/2026 0:00,Tuesday,TRUE,27,6
+1587,Main Street Dentistry,2/25/2026 0:00,Wednesday,TRUE,27,12
+1587,Main Street Dentistry,2/26/2026 0:00,Thursday,TRUE,27,8
+1587,Main Street Dentistry,2/27/2026 0:00,Friday,FALSE,0,0
+1587,Main Street Dentistry,2/28/2026 0:00,Saturday,FALSE,0,0
+1587,Main Street Dentistry,3/1/2026 0:00,Sunday,FALSE,0,0
+1587,Main Street Dentistry,3/2/2026 0:00,Monday,TRUE,27,10
+1587,Main Street Dentistry,3/3/2026 0:00,Tuesday,TRUE,27,10
+1587,Main Street Dentistry,3/4/2026 0:00,Wednesday,TRUE,27,10
+1587,Main Street Dentistry,3/5/2026 0:00,Thursday,TRUE,27,14
+1587,Main Street Dentistry,3/6/2026 0:00,Friday,FALSE,0,0
+1587,Main Street Dentistry,3/7/2026 0:00,Saturday,FALSE,0,0
+1587,Main Street Dentistry,3/8/2026 0:00,Sunday,FALSE,0,0
+1587,Main Street Dentistry,3/9/2026 0:00,Monday,TRUE,27,14
+1587,Main Street Dentistry,3/10/2026 0:00,Tuesday,TRUE,27,8
+1587,Main Street Dentistry,3/11/2026 0:00,Wednesday,TRUE,27,10
+1587,Main Street Dentistry,3/12/2026 0:00,Thursday,TRUE,27,14
+1587,Main Street Dentistry,3/13/2026 0:00,Friday,FALSE,0,0
+1587,Main Street Dentistry,3/14/2026 0:00,Saturday,FALSE,0,0
+1587,Main Street Dentistry,3/15/2026 0:00,Sunday,FALSE,0,0
+1603,1st Advantage Dental - Colonie,2/15/2026 0:00,Sunday,FALSE,0,0
+1603,2nd Advantage Dental - Colonie,2/16/2026 0:00,Monday,TRUE,27,5
+1603,3rd Advantage Dental - Colonie,2/17/2026 0:00,Tuesday,TRUE,27,8
+1603,4th Advantage Dental - Colonie,2/18/2026 0:00,Wednesday,TRUE,27,10
+1603,5th Advantage Dental - Colonie,2/19/2026 0:00,Thursday,TRUE,27,5
+1603,6th Advantage Dental - Colonie,2/20/2026 0:00,Friday,TRUE,24,5
+1603,7th Advantage Dental - Colonie,2/21/2026 0:00,Saturday,FALSE,0,0
+1603,8th Advantage Dental - Colonie,2/22/2026 0:00,Sunday,FALSE,0,0
+1603,9th Advantage Dental - Colonie,2/23/2026 0:00,Monday,TRUE,27,7
+1603,10th Advantage Dental - Colonie,2/24/2026 0:00,Tuesday,TRUE,27,5
+1603,11th Advantage Dental - Colonie,2/25/2026 0:00,Wednesday,TRUE,27,3
+1603,12th Advantage Dental - Colonie,2/26/2026 0:00,Thursday,TRUE,27,9
+1603,13th Advantage Dental - Colonie,2/27/2026 0:00,Friday,TRUE,24,3
+1603,14th Advantage Dental - Colonie,2/28/2026 0:00,Saturday,FALSE,0,0
+1603,15th Advantage Dental - Colonie,3/1/2026 0:00,Sunday,FALSE,0,0
+1603,16th Advantage Dental - Colonie,3/2/2026 0:00,Monday,TRUE,27,9
+1603,17th Advantage Dental - Colonie,3/3/2026 0:00,Tuesday,TRUE,27,12
+1603,18th Advantage Dental - Colonie,3/4/2026 0:00,Wednesday,TRUE,27,11
+1603,19th Advantage Dental - Colonie,3/5/2026 0:00,Thursday,TRUE,27,8
+1603,20th Advantage Dental - Colonie,3/6/2026 0:00,Friday,TRUE,24,10
+1603,21st Advantage Dental - Colonie,3/7/2026 0:00,Saturday,FALSE,0,0
+1603,22nd Advantage Dental - Colonie,3/8/2026 0:00,Sunday,FALSE,0,0
+1603,23rd Advantage Dental - Colonie,3/9/2026 0:00,Monday,TRUE,27,12
+1603,24th Advantage Dental - Colonie,3/10/2026 0:00,Tuesday,TRUE,27,16
+1603,25th Advantage Dental - Colonie,3/11/2026 0:00,Wednesday,TRUE,27,15
+1603,26th Advantage Dental - Colonie,3/12/2026 0:00,Thursday,TRUE,27,15
+1603,27th Advantage Dental - Colonie,3/13/2026 0:00,Friday,TRUE,24,12
+1603,28th Advantage Dental - Colonie,3/14/2026 0:00,Saturday,FALSE,0,0
+1603,29th Advantage Dental - Colonie,3/15/2026 0:00,Sunday,FALSE,0,0
+1605,1st Advantage Dental - Bethlehem,2/15/2026 0:00,Sunday,FALSE,0,0
+1605,2nd Advantage Dental - Bethlehem,2/16/2026 0:00,Monday,TRUE,24,5
+1605,3rd Advantage Dental - Bethlehem,2/17/2026 0:00,Tuesday,TRUE,27,5
+1605,4th Advantage Dental - Bethlehem,2/18/2026 0:00,Wednesday,TRUE,27,4
+1605,5th Advantage Dental - Bethlehem,2/19/2026 0:00,Thursday,TRUE,27,6
+1605,6th Advantage Dental - Bethlehem,2/20/2026 0:00,Friday,FALSE,0,0
+1605,7th Advantage Dental - Bethlehem,2/21/2026 0:00,Saturday,FALSE,0,0
+1605,8th Advantage Dental - Bethlehem,2/22/2026 0:00,Sunday,FALSE,0,0
+1605,9th Advantage Dental - Bethlehem,2/23/2026 0:00,Monday,TRUE,24,6
+1605,10th Advantage Dental - Bethlehem,2/24/2026 0:00,Tuesday,TRUE,27,10
+1605,11th Advantage Dental - Bethlehem,2/25/2026 0:00,Wednesday,TRUE,27,12
+1605,12th Advantage Dental - Bethlehem,2/26/2026 0:00,Thursday,TRUE,27,12
+1605,13th Advantage Dental - Bethlehem,2/27/2026 0:00,Friday,FALSE,0,0
+1605,14th Advantage Dental - Bethlehem,2/28/2026 0:00,Saturday,FALSE,0,0
+1605,15th Advantage Dental - Bethlehem,3/1/2026 0:00,Sunday,FALSE,0,0
+1605,16th Advantage Dental - Bethlehem,3/2/2026 0:00,Monday,TRUE,24,6
+1605,17th Advantage Dental - Bethlehem,3/3/2026 0:00,Tuesday,TRUE,27,9
+1605,18th Advantage Dental - Bethlehem,3/4/2026 0:00,Wednesday,TRUE,27,12
+1605,19th Advantage Dental - Bethlehem,3/5/2026 0:00,Thursday,TRUE,27,13
+1605,20th Advantage Dental - Bethlehem,3/6/2026 0:00,Friday,FALSE,0,0
+1605,21st Advantage Dental - Bethlehem,3/7/2026 0:00,Saturday,FALSE,0,0
+1605,22nd Advantage Dental - Bethlehem,3/8/2026 0:00,Sunday,FALSE,0,0
+1605,23rd Advantage Dental - Bethlehem,3/9/2026 0:00,Monday,TRUE,24,9
+1605,24th Advantage Dental - Bethlehem,3/10/2026 0:00,Tuesday,TRUE,27,14
+1605,25th Advantage Dental - Bethlehem,3/11/2026 0:00,Wednesday,TRUE,27,10
+1605,26th Advantage Dental - Bethlehem,3/12/2026 0:00,Thursday,TRUE,27,12
+1605,27th Advantage Dental - Bethlehem,3/13/2026 0:00,Friday,FALSE,0,0
+1605,28th Advantage Dental - Bethlehem,3/14/2026 0:00,Saturday,FALSE,0,0
+1605,29th Advantage Dental - Bethlehem,3/15/2026 0:00,Sunday,FALSE,0,0
+1606,1st Advantage Dental - Clifton Park,2/15/2026 0:00,Sunday,FALSE,0,0
+1606,2nd Advantage Dental - Clifton Park,2/16/2026 0:00,Monday,TRUE,30,4
+1606,3rd Advantage Dental - Clifton Park,2/17/2026 0:00,Tuesday,TRUE,30,6
+1606,4th Advantage Dental - Clifton Park,2/18/2026 0:00,Wednesday,TRUE,30,6
+1606,5th Advantage Dental - Clifton Park,2/19/2026 0:00,Thursday,TRUE,27,5
+1606,6th Advantage Dental - Clifton Park,2/20/2026 0:00,Friday,FALSE,0,0
+1606,7th Advantage Dental - Clifton Park,2/21/2026 0:00,Saturday,FALSE,0,0
+1606,8th Advantage Dental - Clifton Park,2/22/2026 0:00,Sunday,FALSE,0,0
+1606,9th Advantage Dental - Clifton Park,2/23/2026 0:00,Monday,TRUE,30,3
+1606,10th Advantage Dental - Clifton Park,2/24/2026 0:00,Tuesday,TRUE,30,7
+1606,11th Advantage Dental - Clifton Park,2/25/2026 0:00,Wednesday,TRUE,30,5
+1606,12th Advantage Dental - Clifton Park,2/26/2026 0:00,Thursday,TRUE,27,9
+1606,13th Advantage Dental - Clifton Park,2/27/2026 0:00,Friday,FALSE,0,0
+1606,14th Advantage Dental - Clifton Park,2/28/2026 0:00,Saturday,FALSE,0,0
+1606,15th Advantage Dental - Clifton Park,3/1/2026 0:00,Sunday,FALSE,0,0
+1606,16th Advantage Dental - Clifton Park,3/2/2026 0:00,Monday,TRUE,30,12
+1606,17th Advantage Dental - Clifton Park,3/3/2026 0:00,Tuesday,TRUE,30,14
+1606,18th Advantage Dental - Clifton Park,3/4/2026 0:00,Wednesday,TRUE,30,12
+1606,19th Advantage Dental - Clifton Park,3/5/2026 0:00,Thursday,TRUE,27,10
+1606,20th Advantage Dental - Clifton Park,3/6/2026 0:00,Friday,FALSE,0,0
+1606,21st Advantage Dental - Clifton Park,3/7/2026 0:00,Saturday,FALSE,0,0
+1606,22nd Advantage Dental - Clifton Park,3/8/2026 0:00,Sunday,FALSE,0,0
+1606,23rd Advantage Dental - Clifton Park,3/9/2026 0:00,Monday,TRUE,30,9
+1606,24th Advantage Dental - Clifton Park,3/10/2026 0:00,Tuesday,TRUE,30,13
+1606,25th Advantage Dental - Clifton Park,3/11/2026 0:00,Wednesday,TRUE,30,8
+1606,26th Advantage Dental - Clifton Park,3/12/2026 0:00,Thursday,TRUE,27,12
+1606,27th Advantage Dental - Clifton Park,3/13/2026 0:00,Friday,FALSE,0,0
+1606,28th Advantage Dental - Clifton Park,3/14/2026 0:00,Saturday,FALSE,0,0
+1606,29th Advantage Dental - Clifton Park,3/15/2026 0:00,Sunday,FALSE,0,0

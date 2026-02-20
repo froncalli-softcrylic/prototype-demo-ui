@@ -10,6 +10,7 @@ export type CenterView = 'dashboard' | 'detail' | 'recommendations' | 'trends';
 export type TimeRange = 'this-week' | '14-days' | '30-days' | '90-days';
 export type MarketFilter = 'all' | 'Florida' | 'New York';
 export type StatusFilter = 'all' | 'over-invested' | 'under-invested' | 'optimal';
+export type Theme = 'light' | 'dark';
 
 interface AppState {
     // Navigation
@@ -18,10 +19,14 @@ interface AppState {
     chatOpen: boolean;
     timeRange: TimeRange;
     archExpanded: boolean;
+    isSidebarOpen: boolean;
 
     // Filters
     marketFilter: MarketFilter;
     statusFilter: StatusFilter;
+
+    // Theme
+    theme: Theme;
 
     // Data
     recommendations: Recommendation[];
@@ -36,6 +41,8 @@ interface AppState {
     setMarketFilter: (filter: MarketFilter) => void;
     setStatusFilter: (filter: StatusFilter) => void;
     toggleArchExpanded: () => void;
+    toggleTheme: () => void;
+    toggleSidebar: () => void;
 
     approveRecommendation: (recId: string) => void;
     rejectRecommendation: (recId: string) => void;
@@ -68,17 +75,27 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const [marketFilter, setMarketFilter] = useState<MarketFilter>('all');
     const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
     const [archExpanded, setArchExpanded] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [recommendations, setRecommendations] = useState<Recommendation[]>(initialRecommendations);
     const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
     const [chatThinking, setChatThinking] = useState(false);
+    const [theme, setTheme] = useState<Theme>('light');
+
+    // Apply theme to document element
+    React.useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+    }, [theme]);
 
     const selectOffice = useCallback((id: number | null) => {
         setSelectedOfficeId(id);
         setCenterView(id !== null ? 'detail' : 'dashboard');
+        setIsSidebarOpen(false);
     }, []);
 
     const toggleChat = useCallback(() => setChatOpen(prev => !prev), []);
     const toggleArchExpanded = useCallback(() => setArchExpanded(prev => !prev), []);
+    const toggleTheme = useCallback(() => setTheme(prev => prev === 'light' ? 'dark' : 'light'), []);
+    const toggleSidebar = useCallback(() => setIsSidebarOpen(prev => !prev), []);
 
     const approveRecommendation = useCallback((recId: string) => {
         setRecommendations(prev => prev.map(r => r.recId === recId ? { ...r, status: 'approved' as const } : r));
@@ -140,11 +157,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
     return (
         <AppContext.Provider value={{
-            selectedOfficeId, centerView, chatOpen, timeRange, archExpanded,
-            marketFilter, statusFilter,
+            selectedOfficeId, centerView, chatOpen, timeRange, archExpanded, isSidebarOpen,
+            marketFilter, statusFilter, theme,
             recommendations, chatMessages, chatThinking,
             selectOffice, setCenterView, toggleChat, setTimeRange,
-            setMarketFilter, setStatusFilter, toggleArchExpanded,
+            setMarketFilter, setStatusFilter, toggleArchExpanded, toggleTheme, toggleSidebar,
             approveRecommendation, rejectRecommendation, modifyRecommendation,
             bulkApprove, bulkReject,
             sendChatMessage,

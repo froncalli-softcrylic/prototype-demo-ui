@@ -34,21 +34,22 @@ export default function ChatPanel() {
 
     if (!chatOpen) {
         return (
-            <div style={{
-                width: 48, minWidth: 48, background: 'var(--light-gray)',
-                borderLeft: '1px solid var(--border-gray)', display: 'flex',
-                flexDirection: 'column', alignItems: 'center', padding: '12px 0', flexShrink: 0,
-            }}>
-                <button className="chat-toggle-btn" onClick={toggleChat} title="Open chat">
-                    💬
-                </button>
-                <span style={{
-                    writingMode: 'vertical-rl', fontSize: 10, color: 'var(--medium-gray)',
-                    marginTop: 12, fontFamily: 'var(--font-mono)', fontWeight: 600,
-                    letterSpacing: '0.05em',
+            <div className="chat-panel collapsed">
+                <div style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 0',
+                    width: '100%', height: '100%',
                 }}>
-                    AGENT CHAT
-                </span>
+                    <button className="chat-toggle-btn" onClick={toggleChat} title="Open chat">
+                        💬
+                    </button>
+                    <span style={{
+                        writingMode: 'vertical-rl', fontSize: 10, color: 'var(--medium-gray)',
+                        marginTop: 12, fontFamily: 'var(--font-mono)', fontWeight: 600,
+                        letterSpacing: '0.05em', whiteSpace: 'nowrap'
+                    }}>
+                        AGENT CHAT
+                    </span>
+                </div>
             </div>
         );
     }

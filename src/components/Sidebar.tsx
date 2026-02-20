@@ -27,6 +27,7 @@ export default function Sidebar() {
         marketFilter, setMarketFilter,
         statusFilter, setStatusFilter,
         archExpanded, toggleArchExpanded,
+        isSidebarOpen, toggleSidebar,
     } = useApp();
 
     const statusFilters: { label: string; value: StatusFilter }[] = [
@@ -37,9 +38,14 @@ export default function Sidebar() {
     ];
 
     return (
-        <aside className="sidebar">
+        <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
             <div className="sidebar-header">
-                <div className="sidebar-section-label">Offices</div>
+                <div className="sidebar-section-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    Offices
+                    {isSidebarOpen && (
+                        <button onClick={toggleSidebar} style={{ background: 'none', border: 'none', fontSize: 18, cursor: 'pointer', color: 'var(--charcoal)' }}>✕</button>
+                    )}
+                </div>
             </div>
 
             <div className="sidebar-filters">

@@ -5,6 +5,8 @@ import { getInvestmentStatus } from '@/data/offices';
 import { getResponseCurvesForOffice } from '@/data/response-curves';
 import ResponseCurveChart from './ResponseCurveChart';
 import RecommendationCard from './RecommendationCard';
+import PerformanceTrends from './PerformanceTrends';
+import OfficeSchedule from './OfficeSchedule'; // Added import for OfficeSchedule
 
 const channelConfig: Record<string, { color: string; label: string }> = {
     Google_Search: { color: '#0074B0', label: 'GOOGLE SEARCH' },
@@ -67,66 +69,27 @@ export default function OfficeDetail() {
             {/* Response Curves */}
             <ResponseCurveChart officeId={selectedOffice.officeId} cpaTarget={selectedOffice.cpaTarget} />
 
-            {/* Channel Breakdown */}
-            <div className="channel-breakdown">
-                {curves.map(c => {
-                    const cfg = channelConfig[c.channel];
-                    const delta = c.optimalSpend - c.currentSpend;
-                    const incrKey = c.channel === 'Google_Search' ? 'googleSearchIncr'
-                        : c.channel === 'Meta' ? 'metaIncr' : 'programmaticIncr';
-                    const incrRate = selectedOffice[incrKey as keyof typeof selectedOffice] as number;
-                    const incrPct = Math.round(incrRate * 100);
-                    const incrLabel = incrPct >= 75 ? 'High' : incrPct >= 60 ? 'Mid' : 'Low';
-                    const incrClass = incrPct >= 75 ? 'high' : incrPct >= 60 ? 'mid' : 'low';
-
-                    return (
-                        <div key={c.channel} className="channel-breakdown-row">
-                            <div className="channel-breakdown-header">
-                                <span className="channel-dot" style={{ background: cfg.color, width: 8, height: 8 }} />
-                                <span className="channel-breakdown-name" style={{ color: cfg.color }}>{cfg.label}</span>
-                            </div>
-                            <div className="channel-breakdown-values">
-                                <div className="channel-breakdown-item">
-                                    <div className="channel-breakdown-item-label">Current</div>
-                                    <div className="channel-breakdown-item-value">{formatDollar(c.currentSpend)}/wk</div>
-                                </div>
-                                <span style={{ color: 'var(--medium-gray)', fontSize: 16 }}>→</span>
-                                <div className="channel-breakdown-item">
-                                    <div className="channel-breakdown-item-label">Recommended</div>
-                                    <div className="channel-breakdown-item-value" style={{ color: 'var(--success)' }}>
-                                        {formatDollar(c.optimalSpend)}/wk
-                                    </div>
-                                </div>
-                                <div className="channel-breakdown-item">
-                                    <div className="channel-breakdown-item-label">Delta</div>
-                                    <div className="channel-breakdown-item-value" style={{
-                                        color: delta > 0 ? 'var(--success)' : delta < 0 ? 'var(--danger)' : 'var(--medium-gray)'
-                                    }}>
-                                        {delta > 0 ? '↑' : delta < 0 ? '↓' : '–'} {formatDollar(Math.abs(delta))}
-                                    </div>
-                                </div>
-                                <div className="channel-breakdown-item">
-                                    <div className="channel-breakdown-item-label">Incrementality</div>
-                                    <div className="channel-breakdown-item-value">{incrPct}%</div>
-                                </div>
-                                <div className="channel-breakdown-item">
-                                    <span className={`incrementality-badge ${incrClass}`}>{incrLabel}</span>
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-
             {/* Agent Recommendations */}
             {recs.length > 0 && (
-                <div>
+                <div style={{ marginTop: 24, marginBottom: 24 }}>
                     <div className="chart-section-title" style={{ marginBottom: 12 }}>Agent Recommendations</div>
                     {recs.map(r => (
                         <RecommendationCard key={r.recId} recommendation={r} />
                     ))}
                 </div>
             )}
+
+            {/* Performance KPIs and Office Schedule */}
+            <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <div>
+                    <div className="chart-section-title" style={{ marginBottom: 12 }}>Historical Performance</div>
+                    <PerformanceTrends />
+                </div>
+                <div>
+                    <div className="chart-section-title" style={{ marginBottom: 12 }}>Schedule & Capacity</div>
+                    <OfficeSchedule />
+                </div>
+            </div>
         </div>
     );
 }

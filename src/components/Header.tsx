@@ -3,10 +3,16 @@
 import { useApp } from '@/context/AppContext';
 
 export default function Header() {
-    const { selectedOffice, selectOffice, timeRange, setTimeRange } = useApp();
+    const { selectedOffice, selectOffice, timeRange, setTimeRange, theme, toggleTheme, toggleSidebar } = useApp();
 
     return (
         <header className="header">
+            <button
+                className="mobile-menu-btn"
+                onClick={toggleSidebar}
+            >
+                ☰
+            </button>
             <div className="header-logo">
                 <div>
                     <div className="header-logo-text">HEARTLAND</div>
@@ -25,6 +31,13 @@ export default function Header() {
             </div>
 
             <div className="header-right">
+                <button
+                    className="theme-toggle"
+                    onClick={toggleTheme}
+                    title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
+                >
+                    {theme === 'light' ? '🌙' : '☀️'}
+                </button>
                 <div className="agent-status">
                     <span className="agent-status-dot" />
                     Agent Active
