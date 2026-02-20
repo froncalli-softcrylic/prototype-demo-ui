@@ -37,16 +37,16 @@ const CustomTooltip = ({ active, payload }: any) => {
 
     return (
         <div style={{
-            background: 'var(--bg-surface, #fff)',
-            border: '1px solid var(--border-gray, #e5e7eb)',
+            background: 'var(--bg-surface)',
+            border: '1px solid var(--border-gray)',
             borderRadius: 10,
             padding: '16px',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-            fontFamily: 'Inter, system-ui, sans-serif',
+            boxShadow: 'var(--shadow-lg)',
+            fontFamily: 'var(--font-sans)',
             fontSize: 12,
             minWidth: 200,
         }}>
-            <div style={{ fontWeight: 600, marginBottom: 16, color: 'var(--charcoal, #111)' }}>
+            <div style={{ fontWeight: 600, marginBottom: 16, color: 'var(--charcoal)' }}>
                 Week of {dateTxt}
             </div>
 
@@ -65,19 +65,19 @@ const CustomTooltip = ({ active, payload }: any) => {
                         <div style={{ fontWeight: 600, color: conf.color, marginBottom: 4 }}>
                             {conf.label}
                         </div>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '4px 12px', color: '#6b7280' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '4px 12px', color: 'var(--medium-gray)' }}>
                             <span>Spend:</span>
-                            <span style={{ fontWeight: 600, color: '#111', fontFamily: 'JetBrains Mono, monospace' }}>
+                            <span style={{ fontWeight: 600, color: 'var(--charcoal)', fontFamily: 'var(--font-mono)' }}>
                                 ${(dataRow[spendKey] || 0).toLocaleString()}
                             </span>
 
                             <span>Predicted:</span>
-                            <span style={{ fontWeight: 600, color: '#111', fontFamily: 'JetBrains Mono, monospace' }}>
+                            <span style={{ fontWeight: 600, color: 'var(--charcoal)', fontFamily: 'var(--font-mono)' }}>
                                 {(dataRow[predKey] || 0).toLocaleString()}
                             </span>
 
                             <span>Actual:</span>
-                            <span style={{ fontWeight: 600, color: '#111', fontFamily: 'JetBrains Mono, monospace' }}>
+                            <span style={{ fontWeight: 600, color: 'var(--charcoal)', fontFamily: 'var(--font-mono)' }}>
                                 {(dataRow[actKey] || 0).toLocaleString()}
                             </span>
                         </div>
@@ -85,9 +85,9 @@ const CustomTooltip = ({ active, payload }: any) => {
                 );
             })}
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, color: 'var(--charcoal, #111)', marginTop: 8 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, color: 'var(--charcoal)', marginTop: 8 }}>
                 <span>Total spend:</span>
-                <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>${(dataRow.totalSpend || 0).toLocaleString()}</span>
+                <span style={{ fontFamily: 'var(--font-mono)' }}>${(dataRow.totalSpend || 0).toLocaleString()}</span>
             </div>
         </div>
     );
@@ -108,10 +108,10 @@ const CustomizedAxisTick = (props: { x?: number; y?: number; payload?: { value: 
 
     return (
         <g transform={`translate(${x},${y})`}>
-            <text x={0} y={10} dy={4} textAnchor="middle" fill="#6b7280" fontSize={10} fontFamily="Inter, system-ui, sans-serif">
+            <text x={0} y={10} dy={4} textAnchor="middle" fill="var(--medium-gray)" fontSize={10} fontFamily="var(--font-sans)">
                 {dateTxt}
             </text>
-            <text x={0} y={24} dy={4} textAnchor="middle" fill="#9ca3af" fontSize={9} fontFamily="JetBrains Mono, monospace">
+            <text x={0} y={24} dy={4} textAnchor="middle" fill="var(--medium-gray)" fontSize={9} fontFamily="var(--font-mono)">
                 {spendTxt}
             </text>
         </g>
@@ -127,15 +127,15 @@ const CustomLegend = () => (
         gap: 24,
         marginTop: 16,
         fontSize: 11,
-        color: '#6b7280',
-        fontFamily: 'Inter, system-ui, sans-serif',
+        color: 'var(--medium-gray)',
+        fontFamily: 'var(--font-sans)',
     }}>
         <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ width: 24, height: 2, background: '#3B82F6', display: 'inline-block', borderRadius: 1 }} />
+            <span style={{ width: 24, height: 2, background: 'var(--accent)', display: 'inline-block', borderRadius: 1 }} />
             Predicted (MMM)
         </span>
         <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ width: 24, height: 0, borderTop: '2px dashed #9CA3AF', display: 'inline-block' }} />
+            <span style={{ width: 24, height: 0, borderTop: '2px dashed var(--medium-gray)', display: 'inline-block' }} />
             Actual Bookings
         </span>
         {Object.entries(channelConfig).map(([key, cfg]) => (
@@ -202,7 +202,7 @@ export default function ResponseCurveChart({ officeId }: Props) {
                     </div>
                     <div style={{
                         fontSize: 11,
-                        color: '#9ca3af',
+                        color: 'var(--medium-gray)',
                         marginTop: 2,
                         fontStyle: 'italic',
                     }}>
@@ -222,14 +222,14 @@ export default function ResponseCurveChart({ officeId }: Props) {
                                     gap: 5,
                                     padding: '4px 12px',
                                     borderRadius: 16,
-                                    border: `1.5px solid ${active ? cfg.color : '#d1d5db'}`,
+                                    border: `1.5px solid ${active ? cfg.color : 'var(--border-gray)'}`,
                                     background: active ? cfg.color : 'transparent',
-                                    color: active ? '#fff' : cfg.color,
+                                    color: active ? 'var(--bg-app)' : cfg.color,
                                     fontSize: 11,
                                     fontWeight: 600,
                                     cursor: 'pointer',
                                     transition: 'all 0.15s ease',
-                                    fontFamily: 'Inter, system-ui, sans-serif',
+                                    fontFamily: 'var(--font-sans)',
                                     opacity: active ? 1 : 0.5,
                                 }}
                             >
@@ -260,21 +260,21 @@ export default function ResponseCurveChart({ officeId }: Props) {
                     <XAxis
                         dataKey="tickLabel"
                         tick={<CustomizedAxisTick />}
-                        axisLine={{ stroke: '#e5e7eb' }}
+                        axisLine={{ stroke: 'var(--border-gray)' }}
                         tickLine={false}
                         interval={0}
                     />
 
                     <YAxis
                         domain={[0, maxY]}
-                        tick={{ fontSize: 9, fill: '#9ca3af', fontFamily: 'JetBrains Mono, monospace' }}
+                        tick={{ fontSize: 9, fill: 'var(--medium-gray)', fontFamily: 'var(--font-mono)' }}
                         axisLine={false}
                         tickLine={false}
                         label={{
                             value: 'Incremental Bookings',
                             angle: -90,
                             position: 'insideLeft',
-                            style: { fontSize: 9, fill: '#9ca3af', fontFamily: 'Inter, system-ui, sans-serif' },
+                            style: { fontSize: 9, fill: 'var(--medium-gray)', fontFamily: 'var(--font-sans)' },
                             offset: 0,
                         }}
                     />
