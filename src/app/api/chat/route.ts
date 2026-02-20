@@ -81,7 +81,16 @@ When the user asks about specific offices, channels, or analyses, reference the 
 
 export async function POST(req: NextRequest) {
     try {
-        const { messages } = await req.json();
+        if (!process.env.OPENAI_API_KEY) {
+            return NextResponse.json({ error: 'OpenAI API key not configured' }, { status: 500 });
+        }
+
+        const body = await req.json();
+        const { messages } = body;
+
+        if (!Array.isArray(messages) || messages.length === 0) {
+            return NextResponse.json({ error: 'Invalid request: messages array required' }, { status: 400 });
+        }
 
         // Convert our chat format to OpenAI format
         const openaiMessages = [

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo, useRef, type ReactNode } from 'react';
 import { type Office, offices, getInvestmentStatus } from '@/data/offices';
 import { initialRecommendations, type Recommendation } from '@/data/recommendations';
 import { type ChatMessage } from '@/data/chat-scripts';
@@ -87,6 +87,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const [theme, setTheme] = useState<Theme>('light');
     const [isTutorialRunning, setIsTutorialRunning] = useState(false);
 
+    // Ref to access latest chatMessages without re-creating sendChatMessage on every message
+    const chatMessagesRef = useRef(chatMessages);
+    chatMessagesRef.current = chatMessages;
+
     // Apply theme to document element
     React.useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
@@ -107,7 +111,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const startTutorial = useCallback(() => {
         setIsTutorialRunning(true);
         setCenterView('dashboard');
-        setIsSidebarOpen(false); // Make sure sidebar isn't obscuring the dashboard on mobile
+        setIsSidebarOpen(false);
     }, []);
 
     const stopTutorial = useCallback(() => {
@@ -134,6 +138,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setRecommendations(prev => prev.map(r => r.status === 'pending' ? { ...r, status: 'rejected' as const } : r));
     }, []);
 
+    // Uses ref to read latest chatMessages, so the callback identity is stable (empty deps)
     const sendChatMessage = useCallback((text: string) => {
         const userMsg: ChatMessage = {
             id: `user-${Date.now()}`,
@@ -152,8 +157,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setChatMessages(prev => [...prev, userMsg, agentMsg]);
         setChatThinking(true);
 
-        // Build message history for API
-        const allMessages = [...chatMessages, userMsg].map(m => ({
+        // Use ref for current messages to avoid stale closure
+        const allMessages = [...chatMessagesRef.current, userMsg].map(m => ({
             role: m.role,
             content: m.content,
         }));
@@ -180,7 +185,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
                 let accumulated = '';
 
                 if (reader) {
-                    setChatThinking(false); // Hide thinking dots once streaming starts
+                    setChatThinking(false);
                     while (true) {
                         const { done, value } = await reader.read();
                         if (done) break;
@@ -191,47 +196,66 @@ export function AppProvider({ children }: { children: ReactNode }) {
                         );
                     }
                 }
-            } catch (err) {
+            } catch {
                 setChatMessages(prev =>
                     prev.map(m => m.id === agentMsgId ? { ...m, content: 'Sorry, I encountered a connection error. Please try again.' } : m)
                 );
                 setChatThinking(false);
             }
         })();
-    }, [chatMessages]);
+    }, []); // Stable identity — reads chatMessages via ref
 
-    // Computed
-    const filteredOffices = offices.filter(o => {
+    // Memoized computed values
+    const filteredOffices = useMemo(() => offices.filter(o => {
         if (marketFilter === 'Florida' && o.state !== 'FL') return false;
         if (marketFilter === 'New York' && o.state !== 'NY') return false;
         if (statusFilter !== 'all' && getInvestmentStatus(o) !== statusFilter) return false;
         return true;
-    });
+    }), [marketFilter, statusFilter]);
 
-    const selectedOffice = selectedOfficeId !== null
-        ? offices.find(o => o.officeId === selectedOfficeId) || null
-        : null;
+    const selectedOffice = useMemo(() =>
+        selectedOfficeId !== null
+            ? offices.find(o => o.officeId === selectedOfficeId) || null
+            : null,
+        [selectedOfficeId]);
 
-    const pendingRecommendationsCount = recommendations.filter(r => r.status === 'pending').length;
+    const pendingRecommendationsCount = useMemo(() =>
+        recommendations.filter(r => r.status === 'pending').length,
+        [recommendations]);
 
     const getOfficeRecommendations = useCallback((officeId: number) => {
         return recommendations.filter(r => r.officeId === officeId);
     }, [recommendations]);
 
+    // Memoize the context value to prevent unnecessary consumer re-renders
+    const contextValue = useMemo<AppState>(() => ({
+        selectedOfficeId, centerView, chatOpen, timeRange, archExpanded, isSidebarOpen,
+        marketFilter, statusFilter, theme, isTutorialRunning,
+        recommendations, chatMessages, chatThinking,
+        selectOffice, setCenterView, toggleChat, setTimeRange,
+        setMarketFilter, setStatusFilter, toggleArchExpanded, toggleTheme, toggleSidebar, setSidebarOpen,
+        startTutorial, stopTutorial,
+        approveRecommendation, rejectRecommendation, modifyRecommendation,
+        bulkApprove, bulkReject,
+        sendChatMessage,
+        filteredOffices, selectedOffice, pendingRecommendationsCount,
+        getOfficeRecommendations,
+    }), [
+        selectedOfficeId, centerView, chatOpen, timeRange, archExpanded, isSidebarOpen,
+        marketFilter, statusFilter, theme, isTutorialRunning,
+        recommendations, chatMessages, chatThinking,
+        selectOffice, setCenterView, toggleChat, setTimeRange,
+        setMarketFilter, setStatusFilter, toggleArchExpanded, toggleTheme, toggleSidebar, setSidebarOpen,
+        startTutorial, stopTutorial,
+        approveRecommendation, rejectRecommendation, modifyRecommendation,
+        bulkApprove, bulkReject,
+        sendChatMessage,
+        filteredOffices, selectedOffice, pendingRecommendationsCount,
+        getOfficeRecommendations,
+    ]);
+
     return (
-        <AppContext.Provider value={{
-            selectedOfficeId, centerView, chatOpen, timeRange, archExpanded, isSidebarOpen,
-            marketFilter, statusFilter, theme, isTutorialRunning,
-            recommendations, chatMessages, chatThinking,
-            selectOffice, setCenterView, toggleChat, setTimeRange,
-            setMarketFilter, setStatusFilter, toggleArchExpanded, toggleTheme, toggleSidebar, setSidebarOpen,
-            startTutorial, stopTutorial,
-            approveRecommendation, rejectRecommendation, modifyRecommendation,
-            bulkApprove, bulkReject,
-            sendChatMessage,
-            filteredOffices, selectedOffice, pendingRecommendationsCount,
-            getOfficeRecommendations,
-        }}>
+        <AppContext.Provider value={contextValue}>
             {children}
         </AppContext.Provider>
     );
