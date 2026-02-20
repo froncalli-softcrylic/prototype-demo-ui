@@ -99,7 +99,7 @@ export default function ResponseCurveChart({ officeId, cpaTarget }: Props) {
     };
 
     // Generate merged data points for all channels
-    const chartData = useMemo(() => {
+    const { chartData, spendTicks } = useMemo(() => {
         const maxSpend = Math.max(...curves.map(c => c.maxSpend));
         const steps = 150;
         const data: Record<string, number | string>[] = [];
@@ -111,7 +111,12 @@ export default function ResponseCurveChart({ officeId, cpaTarget }: Props) {
             }
             data.push(point);
         }
-        return data;
+        // Generate tick marks at every $1K
+        const ticks: number[] = [];
+        for (let v = 0; v <= maxSpend; v += 1000) {
+            ticks.push(v);
+        }
+        return { chartData: data, spendTicks: ticks };
     }, [curves]);
 
     const maxBookings = Math.max(...curves.map(c => c.K)) * 1.05;
@@ -154,6 +159,9 @@ export default function ResponseCurveChart({ officeId, cpaTarget }: Props) {
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--border-gray)" />
                     <XAxis
                         dataKey="spend"
+                        type="number"
+                        domain={[0, 'dataMax']}
+                        ticks={spendTicks}
                         tickFormatter={formatSpend}
                         tick={{ fontSize: 9, fontFamily: 'JetBrains Mono, monospace', fill: 'var(--medium-gray)' }}
                         axisLine={{ stroke: 'var(--border-gray)' }}
@@ -300,7 +308,6 @@ export default function ResponseCurveChart({ officeId, cpaTarget }: Props) {
             {/* Spend comparison panel */}
             <div className="spend-comparison-panel">
                 <div className="spend-comparison-legend">
-                    <LegendTooltip text="Current Spend" dotClass="spend-legend-current" description="The colored dots on the response curve show the current weekly spend level for each channel. This is the actual amount being invested right now." />
                     <LegendTooltip text="Recommended Spend" dotClass="spend-legend-recommended" description="The green dots on the response curve show the AI-recommended optimal weekly spend. Shifting budget to this level is projected to maximize incremental bookings." />
                 </div>
                 <div className="spend-comparison-cards">

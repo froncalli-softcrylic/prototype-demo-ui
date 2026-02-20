@@ -5,7 +5,6 @@ import { getInvestmentStatus } from '@/data/offices';
 import { getResponseCurvesForOffice } from '@/data/response-curves';
 import ResponseCurveChart from './ResponseCurveChart';
 import RecommendationCard from './RecommendationCard';
-import PerformanceTrends from './PerformanceTrends';
 import OfficeSchedule from './OfficeSchedule'; // Added import for OfficeSchedule
 
 const channelConfig: Record<string, { color: string; label: string }> = {
@@ -79,16 +78,10 @@ export default function OfficeDetail() {
                 </div>
             )}
 
-            {/* Performance KPIs and Office Schedule */}
-            <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                <div>
-                    <div className="chart-section-title" style={{ marginBottom: 12 }}>Historical Performance</div>
-                    <PerformanceTrends />
-                </div>
-                <div>
-                    <div className="chart-section-title" style={{ marginBottom: 12 }}>Schedule & Capacity</div>
-                    <OfficeSchedule />
-                </div>
+            {/* Office Schedule */}
+            <div style={{ marginTop: 24 }}>
+                <div className="chart-section-title" style={{ marginBottom: 12 }}>Schedule & Capacity</div>
+                <OfficeSchedule />
             </div>
         </div>
     );

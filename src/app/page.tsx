@@ -6,9 +6,11 @@ import Sidebar from '@/components/Sidebar';
 import ChatPanel from '@/components/ChatPanel';
 import SummaryStrip from '@/components/SummaryStrip';
 import OfficeCardGrid from '@/components/OfficeCardGrid';
+import AdminIntegrations from '@/components/AdminIntegrations';
 import OfficeDetail from '@/components/OfficeDetail';
 import RecommendationsQueue from '@/components/RecommendationsQueue';
 import PerformanceTrends from '@/components/PerformanceTrends';
+import GuidedTutorial from '@/components/GuidedTutorial';
 
 function CenterPanel() {
   const { centerView, setCenterView, pendingRecommendationsCount, selectedOfficeId } = useApp();
@@ -32,7 +34,7 @@ function CenterPanel() {
           Dashboard
         </button>
         <button
-          className={`center-tab ${centerView === 'recommendations' ? 'active' : ''}`}
+          className={`center-tab tour-nav-recommendations ${centerView === 'recommendations' ? 'active' : ''}`}
           onClick={() => setCenterView('recommendations')}
         >
           Recommendations
@@ -41,7 +43,7 @@ function CenterPanel() {
           )}
         </button>
         <button
-          className={`center-tab ${centerView === 'trends' ? 'active' : ''}`}
+          className={`center-tab tour-nav-performance ${centerView === 'trends' ? 'active' : ''}`}
           onClick={() => setCenterView('trends')}
         >
           Performance
@@ -51,6 +53,7 @@ function CenterPanel() {
       {centerView === 'dashboard' && (
         <>
           <SummaryStrip />
+          <AdminIntegrations />
           <OfficeCardGrid />
         </>
       )}
@@ -77,6 +80,7 @@ function AppShell() {
 export default function Home() {
   return (
     <AppProvider>
+      <GuidedTutorial />
       <AppShell />
     </AppProvider>
   );

@@ -55,7 +55,7 @@ export default function ChatPanel() {
     }
 
     return (
-        <div className="chat-panel">
+        <div className="chat-panel tour-ai-agent">
             <div className="chat-header">
                 <div className="chat-header-title">
                     <span className="agent-status-dot" style={{ width: 6, height: 6 }} />

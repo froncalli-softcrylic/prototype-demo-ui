@@ -1,9 +1,10 @@
 'use client';
 
 import { useApp } from '@/context/AppContext';
+import { PlayCircle } from 'lucide-react';
 
 export default function Header() {
-    const { selectedOffice, selectOffice, timeRange, setTimeRange, theme, toggleTheme, toggleSidebar } = useApp();
+    const { selectedOffice, selectOffice, timeRange, setTimeRange, theme, toggleTheme, toggleSidebar, startTutorial } = useApp();
 
     return (
         <header className="header">
@@ -33,6 +34,14 @@ export default function Header() {
             <div className="header-right">
                 <button
                     className="theme-toggle"
+                    onClick={startTutorial}
+                    title="Start Product Tour"
+                    style={{ marginRight: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <PlayCircle size={20} color="var(--heartland-blue)" />
+                </button>
+                <button
+                    className="theme-toggle"
                     onClick={toggleTheme}
                     title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
                 >
@@ -45,14 +54,14 @@ export default function Header() {
                 <span style={{ color: 'var(--border-gray)' }}>|</span>
                 <span>Last refresh: 2:30 PM</span>
                 <select
-                    className="time-range-select"
+                    className="time-range-select tour-time-range"
                     value={timeRange}
                     onChange={e => setTimeRange(e.target.value as typeof timeRange)}
                 >
                     <option value="this-week">This Week</option>
-                    <option value="14-days">Last 14 Days</option>
-                    <option value="30-days">Last 30 Days</option>
-                    <option value="90-days">Last 90 Days</option>
+                    <option value="14-days" disabled>Last 14 Days</option>
+                    <option value="30-days" disabled>Last 30 Days</option>
+                    <option value="90-days" disabled>Last 90 Days</option>
                 </select>
                 <span style={{ fontWeight: 600, color: 'var(--charcoal)' }}>Field Strategist</span>
             </div>

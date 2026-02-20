@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
 import { type Office, offices, getInvestmentStatus, type InvestmentStatus } from '@/data/offices';
 import { initialRecommendations, type Recommendation } from '@/data/recommendations';
-import { type ChatMessage, findScriptedResponse, defaultAgentResponse, suggestedPrompts } from '@/data/chat-scripts';
+import { type ChatMessage, suggestedPrompts } from '@/data/chat-scripts';
 import { getResponseCurvesForOffice } from '@/data/response-curves';
 
 export type CenterView = 'dashboard' | 'detail' | 'recommendations' | 'trends';
@@ -28,6 +28,9 @@ interface AppState {
     // Theme
     theme: Theme;
 
+    // Tutorial
+    isTutorialRunning: boolean;
+
     // Data
     recommendations: Recommendation[];
     chatMessages: ChatMessage[];
@@ -43,6 +46,9 @@ interface AppState {
     toggleArchExpanded: () => void;
     toggleTheme: () => void;
     toggleSidebar: () => void;
+    setSidebarOpen: (isOpen: boolean) => void;
+    startTutorial: () => void;
+    stopTutorial: () => void;
 
     approveRecommendation: (recId: string) => void;
     rejectRecommendation: (recId: string) => void;
@@ -80,6 +86,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
     const [chatThinking, setChatThinking] = useState(false);
     const [theme, setTheme] = useState<Theme>('light');
+    const [isTutorialRunning, setIsTutorialRunning] = useState(false);
 
     // Apply theme to document element
     React.useEffect(() => {
@@ -96,6 +103,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const toggleArchExpanded = useCallback(() => setArchExpanded(prev => !prev), []);
     const toggleTheme = useCallback(() => setTheme(prev => prev === 'light' ? 'dark' : 'light'), []);
     const toggleSidebar = useCallback(() => setIsSidebarOpen(prev => !prev), []);
+    const setSidebarOpen = useCallback((isOpen: boolean) => setIsSidebarOpen(isOpen), []);
+
+    const startTutorial = useCallback(() => {
+        setIsTutorialRunning(true);
+        setCenterView('dashboard');
+        setIsSidebarOpen(false); // Make sure sidebar isn't obscuring the dashboard on mobile
+    }, []);
+
+    const stopTutorial = useCallback(() => {
+        setIsTutorialRunning(false);
+    }, []);
 
     const approveRecommendation = useCallback((recId: string) => {
         setRecommendations(prev => prev.map(r => r.recId === recId ? { ...r, status: 'approved' as const } : r));
@@ -124,18 +142,64 @@ export function AppProvider({ children }: { children: ReactNode }) {
             content: text,
             timestamp: new Date().toISOString(),
         };
-        setChatMessages(prev => [...prev, userMsg]);
+        const agentMsgId = `agent-${Date.now()}`;
+        const agentMsg: ChatMessage = {
+            id: agentMsgId,
+            role: 'agent',
+            content: '',
+            timestamp: new Date().toISOString(),
+        };
+
+        setChatMessages(prev => [...prev, userMsg, agentMsg]);
         setChatThinking(true);
 
-        setTimeout(() => {
-            const scripted = findScriptedResponse(text);
-            const response: ChatMessage = scripted
-                ? { ...scripted.agentResponse, id: `agent-${Date.now()}`, timestamp: new Date().toISOString() }
-                : { ...defaultAgentResponse, id: `agent-${Date.now()}`, timestamp: new Date().toISOString() };
-            setChatMessages(prev => [...prev, response]);
-            setChatThinking(false);
-        }, 1500 + Math.random() * 1000);
-    }, []);
+        // Build message history for API
+        const allMessages = [...chatMessages, userMsg].map(m => ({
+            role: m.role,
+            content: m.content,
+        }));
+
+        (async () => {
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: allMessages }),
+                });
+
+                if (!res.ok) {
+                    const errText = await res.text();
+                    setChatMessages(prev =>
+                        prev.map(m => m.id === agentMsgId ? { ...m, content: `Error: ${errText}` } : m)
+                    );
+                    setChatThinking(false);
+                    return;
+                }
+
+                const reader = res.body?.getReader();
+                const decoder = new TextDecoder();
+                let accumulated = '';
+
+                if (reader) {
+                    setChatThinking(false); // Hide thinking dots once streaming starts
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        accumulated += decoder.decode(value, { stream: true });
+                        const current = accumulated;
+                        setChatMessages(prev =>
+                            prev.map(m => m.id === agentMsgId ? { ...m, content: current } : m)
+                        );
+                    }
+                }
+            } catch (err) {
+                setChatMessages(prev =>
+                    prev.map(m => m.id === agentMsgId ? { ...m, content: 'Sorry, I encountered a connection error. Please try again.' } : m)
+                );
+                setChatThinking(false);
+            }
+        })();
+    }, [chatMessages]);
 
     // Computed
     const filteredOffices = offices.filter(o => {
@@ -158,10 +222,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return (
         <AppContext.Provider value={{
             selectedOfficeId, centerView, chatOpen, timeRange, archExpanded, isSidebarOpen,
-            marketFilter, statusFilter, theme,
+            marketFilter, statusFilter, theme, isTutorialRunning,
             recommendations, chatMessages, chatThinking,
             selectOffice, setCenterView, toggleChat, setTimeRange,
-            setMarketFilter, setStatusFilter, toggleArchExpanded, toggleTheme, toggleSidebar,
+            setMarketFilter, setStatusFilter, toggleArchExpanded, toggleTheme, toggleSidebar, setSidebarOpen,
+            startTutorial, stopTutorial,
             approveRecommendation, rejectRecommendation, modifyRecommendation,
             bulkApprove, bulkReject,
             sendChatMessage,

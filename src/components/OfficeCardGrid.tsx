@@ -124,7 +124,7 @@ export default function OfficeCardGrid() {
     const { filteredOffices } = useApp();
 
     return (
-        <div className="office-grid">
+        <div className="office-grid tour-office-grid">
             {filteredOffices.map(office => (
                 <OfficeCard key={office.officeId} office={office} />
             ))}

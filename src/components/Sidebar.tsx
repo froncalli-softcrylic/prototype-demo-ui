@@ -38,7 +38,7 @@ export default function Sidebar() {
     ];
 
     return (
-        <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <aside className={`sidebar tour-office-sidebar ${isSidebarOpen ? 'open' : ''}`}>
             <div className="sidebar-header">
                 <div className="sidebar-section-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     Offices

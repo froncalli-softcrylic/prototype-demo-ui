@@ -207,39 +207,6 @@ export default function PerformanceAnalytics() {
                     </>
                 )}
 
-                {/* 5. Conversions by Channel (Full Width) */}
-                <div className="chart-section grid-item full-width">
-                    <div className="chart-section-title">Conversions by Channel</div>
-                    <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={channelData} margin={{ top: 20, right: 20, bottom: 20, left: 0 }} barSize={50}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-gray, #EEEEEE)" />
-                            <XAxis
-                                dataKey="channel"
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{ fontSize: 13, fill: 'var(--charcoal, #6B7280)' }}
-                            />
-                            <YAxis
-                                axisLine={false}
-                                tickLine={false}
-                                tickFormatter={formatNumber}
-                                tick={{ fontSize: 11, fill: 'var(--charcoal, #6B7280)' }}
-                            />
-                            <Tooltip
-                                {...tooltipStyle}
-                                cursor={{ fill: 'transparent' }}
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                formatter={(value: any) => [formatNumber(Number(value)), 'Conversions']}
-                            />
-                            <Bar dataKey="conversions" radius={[4, 4, 0, 0]}>
-                                {channelData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[entry.channel as keyof typeof COLORS] || '#8884d8'} />
-                                ))}
-                            </Bar>
-                        </BarChart>
-                    </ResponsiveContainer>
-                </div>
-
             </div>
         </div>
     );

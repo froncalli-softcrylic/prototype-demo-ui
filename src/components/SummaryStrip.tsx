@@ -15,7 +15,7 @@ export default function SummaryStrip() {
     const pendingCount = recommendations.filter(r => r.status === 'pending').length;
 
     return (
-        <div className="summary-strip">
+        <div className="summary-strip tour-kpi-strip">
             <div className="summary-card hover-lift" style={{ display: 'flex', alignItems: 'center', textAlign: 'left', padding: '20px' }}>
                 <div className="icon-box red" style={{ width: 48, height: 48, marginRight: 16 }}>
                     <DollarSign size={24} />
