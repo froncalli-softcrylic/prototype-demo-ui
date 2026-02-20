@@ -99,9 +99,6 @@
 }
 
 /* ===== JOYRIDE SMOOTH TRANSITIONS ===== */
-html {
-  scroll-behavior: smooth;
-}
 
 /* Smooth spotlight movement between steps */
 .__floater {

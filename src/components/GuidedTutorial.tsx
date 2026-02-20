@@ -114,6 +114,14 @@ function restoreScrollability() {
     document.body.style.overflow = '';
     document.documentElement.style.removeProperty('overflow');
     document.body.style.removeProperty('overflow');
+
+    // Joyride also sets overflow: hidden on the nearest scroll parent, which is .center-panel in our layout
+    const scrollParents = document.querySelectorAll('.center-panel, .app-layout, .sidebar');
+    scrollParents.forEach(el => {
+        const htmlEl = el as HTMLElement;
+        htmlEl.style.overflow = '';
+        htmlEl.style.removeProperty('overflow');
+    });
 }
 
 export default function GuidedTutorial() {
@@ -194,18 +202,8 @@ export default function GuidedTutorial() {
                 setCenterView('dashboard');
             }
 
-            // Use a small delay when navigation changes the DOM, otherwise advance immediately
-            const needsNavDelay = [
-                '.tour-nav-recommendations',
-                '.tour-nav-performance',
-                '.tour-office-sidebar',
-            ].includes(nextTarget as string);
-
-            if (needsNavDelay) {
-                setTimeout(() => setStepIndex(nextIndex), 250);
-            } else {
-                setStepIndex(nextIndex);
-            }
+            // Navigation is instant so Joyride can find the element smoothly
+            setStepIndex(nextIndex);
         }
     }, [stopTutorial, setCenterView, setSidebarOpen]);
 
