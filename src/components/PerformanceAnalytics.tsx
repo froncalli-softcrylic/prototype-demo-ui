@@ -100,7 +100,37 @@ export default function PerformanceAnalytics() {
                     </ResponsiveContainer>
                 </div>
 
-                {/* 2. CPA by Channel (Bar) */}
+                {/* 2. Customer Acquisitions by Channel (Donut) */}
+                <div className="chart-section grid-item">
+                    <div className="chart-section-title">Customer Acquisitions by Channel</div>
+                    <ResponsiveContainer width="100%" height={260}>
+                        <PieChart>
+                            <Pie
+                                data={channelData}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={60}
+                                outerRadius={90}
+                                paddingAngle={2}
+                                dataKey="bookings"
+                                nameKey="channel"
+                                label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
+                                labelLine={true}
+                            >
+                                {channelData.map((entry, index) => (
+                                    <Cell key={`cell-acq-${index}`} fill={COLORS[entry.channel as keyof typeof COLORS] || '#8884d8'} />
+                                ))}
+                            </Pie>
+                            <Tooltip
+                                {...tooltipStyle}
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                formatter={(value: any) => [formatNumber(Number(value)), 'Acquisitions']}
+                            />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+
+                {/* 3. CPA by Channel (Bar) */}
                 <div className="chart-section grid-item">
                     <div className="chart-section-title">CPA by Channel</div>
                     <ResponsiveContainer width="100%" height={260}>

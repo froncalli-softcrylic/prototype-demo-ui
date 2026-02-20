@@ -2708,6 +2708,7 @@ export function getAggregateChannelAnalytics(officeId?: number) {
             // Clean up channel names for UI display
             channel: channel === 'Google_Search' ? 'Google' : channel === 'Google_Programmatic' ? 'Programmatic' : channel,
             spend: metrics.spend,
+            bookings: metrics.bookings,
             conversions: metrics.conversions,
             cpa: avgCPA
         };
