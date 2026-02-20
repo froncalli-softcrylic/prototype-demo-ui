@@ -98,6 +98,26 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
 }
 
+/* ===== JOYRIDE SMOOTH TRANSITIONS ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Smooth spotlight movement between steps */
+.__floater {
+  transition: transform 0.3s ease !important;
+}
+
+/* Spotlight hole smooth resize */
+.react-joyride__spotlight {
+  transition: top 0.3s ease, left 0.3s ease, width 0.3s ease, height 0.3s ease, border-radius 0.3s ease !important;
+}
+
+/* Overlay fade */
+.react-joyride__overlay {
+  transition: background-color 0.3s ease !important;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; outline-color: var(--heartland-blue); }
 
 body {

@@ -1,14 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import { useApp } from '@/context/AppContext';
 import { tutorialSteps } from '@/data/tutorial-steps';
-import { CallBackProps, STATUS, TooltipRenderProps } from 'react-joyride';
+import { CallBackProps, ACTIONS, EVENTS, STATUS, TooltipRenderProps } from 'react-joyride';
 
 // Dynamically import Joyride so it only loads on the client
 const Joyride = dynamic(() => import('react-joyride'), { ssr: false });
 
+/* ─────────────────────────────────────────────
+   Custom Tooltip with smooth fade-in animation
+   ───────────────────────────────────────────── */
 function CustomTooltip({
     index,
     step,
@@ -18,6 +21,14 @@ function CustomTooltip({
     tooltipProps,
     isLastStep,
 }: TooltipRenderProps) {
+    const [visible, setVisible] = useState(false);
+
+    // Fade-in on mount
+    useEffect(() => {
+        const raf = requestAnimationFrame(() => setVisible(true));
+        return () => cancelAnimationFrame(raf);
+    }, []);
+
     return (
         <div
             {...tooltipProps}
@@ -26,9 +37,14 @@ function CustomTooltip({
                 borderRadius: '16px',
                 padding: '24px',
                 width: '380px',
+                maxWidth: 'calc(100vw - 40px)',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1)',
                 border: '1px solid var(--border-gray)',
                 fontFamily: 'var(--font-sans)',
+                // Smooth fade-in
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(8px)',
+                transition: 'opacity 0.25s ease, transform 0.25s ease',
             }}
         >
             {/* Header */}
@@ -53,7 +69,7 @@ function CustomTooltip({
                     style={{
                         background: 'none', border: 'none', color: 'var(--medium-gray)',
                         fontSize: '13px', fontWeight: 600, cursor: 'pointer', padding: '8px 4px',
-                        opacity: index === 0 ? 1 : 0, pointerEvents: index === 0 ? 'auto' : 'none'
+                        transition: 'color 0.15s ease',
                     }}
                 >
                     Skip Tour
@@ -65,7 +81,8 @@ function CustomTooltip({
                             style={{
                                 background: 'transparent', border: '1px solid var(--border-gray)',
                                 color: 'var(--charcoal)', padding: '8px 16px', borderRadius: '8px',
-                                fontWeight: 700, fontSize: '13px', cursor: 'pointer'
+                                fontWeight: 700, fontSize: '13px', cursor: 'pointer',
+                                transition: 'all 0.15s ease',
                             }}
                         >
                             Back
@@ -76,7 +93,8 @@ function CustomTooltip({
                         style={{
                             background: 'var(--heartland-blue)', border: 'none', color: 'white',
                             padding: '8px 20px', borderRadius: '8px', fontWeight: 700,
-                            fontSize: '13px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0, 116, 176, 0.3)'
+                            fontSize: '13px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0, 116, 176, 0.3)',
+                            transition: 'all 0.15s ease',
                         }}
                     >
                         {isLastStep ? 'Finish' : 'Next'}
@@ -87,57 +105,109 @@ function CustomTooltip({
     );
 }
 
+/* ─────────────────────────────────
+   Force-clear Joyride scroll locks
+   ───────────────────────────────── */
+function restoreScrollability() {
+    // Joyride sets overflow: hidden on both <html> and <body> — forcibly clear it
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    document.documentElement.style.removeProperty('overflow');
+    document.body.style.removeProperty('overflow');
+}
+
 export default function GuidedTutorial() {
     const { isTutorialRunning, startTutorial, stopTutorial, setCenterView, setSidebarOpen } = useApp();
     const [mounted, setMounted] = useState(false);
+    const [stepIndex, setStepIndex] = useState(0);
 
     // Only run on client mounting
     useEffect(() => {
         setMounted(true);
         const hasSeenTutorial = localStorage.getItem('hasSeenTutorial');
         if (!hasSeenTutorial) {
-            // Slight delay so the UI fully paints before starting
             setTimeout(() => {
                 startTutorial();
-            }, 1000);
+            }, 1200);
         }
     }, [startTutorial]);
 
-    const handleJoyrideCallback = (data: CallBackProps) => {
+    // Safety net: whenever the tour stops running, ensure scroll is restored
+    useEffect(() => {
+        if (!isTutorialRunning) {
+            // Small delay to let Joyride unmount its overlay first
+            const timer = setTimeout(restoreScrollability, 100);
+            return () => clearTimeout(timer);
+        }
+    }, [isTutorialRunning]);
+
+    // Reset step index whenever tour starts
+    useEffect(() => {
+        if (isTutorialRunning) {
+            setStepIndex(0);
+        }
+    }, [isTutorialRunning]);
+
+    const handleJoyrideCallback = useCallback((data: CallBackProps) => {
         const { status, type, index, action } = data;
 
-        // Auto-navigation for specific steps
-        if (type === 'step:before') {
-            const currentStepTarget = tutorialSteps[index]?.target;
-
-            // If the next step is the deep-dive recommendations, ensure we navigate there
-            if (currentStepTarget === '.tour-nav-recommendations') {
-                setCenterView('recommendations');
-            }
-            // If the next step is performance trends, switch tab
-            if (currentStepTarget === '.tour-nav-performance') {
-                setCenterView('trends');
-            }
-            // If step focuses on the sidebar or specific office, ensure sidebar is open
-            if (currentStepTarget === '.tour-office-sidebar') {
-                setCenterView('dashboard'); // go back from recs/trends
-                // Use setTimeout to allow state to settle
-                setTimeout(() => {
-                    setSidebarOpen && setSidebarOpen(true);
-                }, 100);
-            }
-        }
-
         const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
+
+        // Tour ended — clean up
         if (finishedStatuses.includes(status)) {
-            // Tour finished or skipped
             localStorage.setItem('hasSeenTutorial', 'true');
             stopTutorial();
-
-            // Clean up navigation payload
             setCenterView('dashboard');
+            // Force restore scroll
+            restoreScrollability();
+            return;
         }
-    };
+
+        // Handle close button
+        if (action === ACTIONS.CLOSE) {
+            localStorage.setItem('hasSeenTutorial', 'true');
+            stopTutorial();
+            setCenterView('dashboard');
+            restoreScrollability();
+            return;
+        }
+
+        // Step navigation
+        if (type === EVENTS.STEP_AFTER) {
+            const nextIndex = index + (action === ACTIONS.PREV ? -1 : 1);
+
+            // Pre-navigate before moving to the target step
+            const nextTarget = tutorialSteps[nextIndex]?.target;
+
+            if (nextTarget === '.tour-nav-recommendations') {
+                setCenterView('recommendations');
+            } else if (nextTarget === '.tour-nav-performance') {
+                setCenterView('trends');
+            } else if (nextTarget === '.tour-office-sidebar') {
+                setCenterView('dashboard');
+                setSidebarOpen && setSidebarOpen(true);
+            } else if (
+                nextTarget === '.tour-kpi-strip' ||
+                nextTarget === '.tour-admin-integrations' ||
+                nextTarget === '.tour-office-grid > div:first-child'
+            ) {
+                setCenterView('dashboard');
+            }
+
+            // Use a small delay when navigation changes the DOM, otherwise advance immediately
+            const needsNavDelay = [
+                '.tour-nav-recommendations',
+                '.tour-nav-performance',
+                '.tour-office-sidebar',
+            ].includes(nextTarget as string);
+
+            if (needsNavDelay) {
+                setTimeout(() => setStepIndex(nextIndex), 250);
+            } else {
+                setStepIndex(nextIndex);
+            }
+        }
+    }, [stopTutorial, setCenterView, setSidebarOpen]);
 
     if (!mounted) return null;
 
@@ -145,21 +215,37 @@ export default function GuidedTutorial() {
         <Joyride
             steps={tutorialSteps}
             run={isTutorialRunning}
+            stepIndex={stepIndex}
             continuous
             scrollToFirstStep
             showProgress
             showSkipButton
             disableOverlayClose
+            disableScrollParentFix={false}
             tooltipComponent={CustomTooltip}
             callback={handleJoyrideCallback}
-            scrollOffset={100}
-            floaterProps={{ disableAnimation: true }}
+            scrollOffset={120}
+            spotlightPadding={8}
+            floaterProps={{
+                disableAnimation: false,
+                styles: {
+                    floater: {
+                        transition: 'opacity 0.3s ease, transform 0.3s ease',
+                    }
+                }
+            }}
             styles={{
                 options: {
                     zIndex: 10000,
-                    overlayColor: 'rgba(0, 0, 0, 0.55)',
-                    arrowColor: 'var(--bg-surface)'
-                }
+                    overlayColor: 'rgba(0, 0, 0, 0.5)',
+                    arrowColor: 'var(--bg-surface)',
+                },
+                spotlight: {
+                    borderRadius: 12,
+                },
+                overlay: {
+                    transition: 'background-color 0.3s ease',
+                },
             }}
         />
     );
