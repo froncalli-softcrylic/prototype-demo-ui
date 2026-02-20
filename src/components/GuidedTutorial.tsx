@@ -191,12 +191,13 @@ export default function GuidedTutorial() {
                 setCenterView('recommendations');
             } else if (nextTarget === '.tour-nav-performance') {
                 setCenterView('trends');
+            } else if (nextTarget === '.tour-admin-integrations') {
+                setCenterView('admin');
             } else if (nextTarget === '.tour-office-sidebar') {
                 setCenterView('dashboard');
                 setSidebarOpen?.(true);
             } else if (
                 nextTarget === '.tour-kpi-strip' ||
-                nextTarget === '.tour-admin-integrations' ||
                 nextTarget === '.tour-office-grid > div:first-child'
             ) {
                 setCenterView('dashboard');
@@ -243,6 +244,8 @@ export default function GuidedTutorial() {
                 },
                 overlay: {
                     transition: 'background-color 0.3s ease',
+                    backdropFilter: 'none',
+                    WebkitBackdropFilter: 'none',
                 },
             }}
         />
