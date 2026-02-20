@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { type Office, getInvestmentStatus } from '@/data/offices';
 import { getResponseCurvesForOffice } from '@/data/response-curves';
@@ -122,12 +123,44 @@ function OfficeCard({ office }: { office: Office }) {
 
 export default function OfficeCardGrid() {
     const { filteredOffices } = useApp();
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const visibleOffices = isExpanded ? filteredOffices : filteredOffices.slice(0, 3);
 
     return (
-        <div className="office-grid tour-office-grid">
-            {filteredOffices.map(office => (
-                <OfficeCard key={office.officeId} office={office} />
-            ))}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 24, paddingBottom: 24 }}>
+            <div className="office-grid tour-office-grid">
+                {visibleOffices.map(office => (
+                    <OfficeCard key={office.officeId} office={office} />
+                ))}
+            </div>
+            {filteredOffices.length > 3 && (
+                <button
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    style={{
+                        alignSelf: 'center',
+                        padding: '12px 24px',
+                        borderRadius: 'var(--radius-full)',
+                        background: 'transparent',
+                        border: '2px solid var(--border-light)',
+                        color: 'var(--charcoal)',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        fontSize: 14,
+                        transition: 'all 0.2s ease',
+                    }}
+                    onMouseOver={(e) => {
+                        e.currentTarget.style.borderColor = 'var(--heartland-blue)';
+                        e.currentTarget.style.color = 'var(--heartland-blue)';
+                    }}
+                    onMouseOut={(e) => {
+                        e.currentTarget.style.borderColor = 'var(--border-light)';
+                        e.currentTarget.style.color = 'var(--charcoal)';
+                    }}
+                >
+                    {isExpanded ? 'Show Less Offices' : `Show ${filteredOffices.length - 3} More Offices`}
+                </button>
+            )}
         </div>
     );
 }

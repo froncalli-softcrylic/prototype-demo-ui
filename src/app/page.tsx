@@ -53,8 +53,8 @@ function CenterPanel() {
       {centerView === 'dashboard' && (
         <>
           <SummaryStrip />
-          <AdminIntegrations />
           <OfficeCardGrid />
+          <AdminIntegrations />
         </>
       )}
 

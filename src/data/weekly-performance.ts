@@ -1,3 +1,5 @@
+
+
 export interface WeeklyPerformance {
     weekStart: string;
     officeId: number;
@@ -2736,3 +2738,95 @@ export function getAggregateOfficeAnalytics() {
         };
     }).sort((a, b) => b.spend - a.spend); // sort by spend desc
 }
+
+/** Weekly MMM performance data for time-series chart: predicted vs actual bookings */
+export function getWeeklyMMMPerformance(officeId: number) {
+    // Import hill function inline to avoid circular deps if they exist
+    const { hillFunction, getResponseCurvesForOffice } = require('@/data/response-curves');
+
+    const officeData = weeklyPerformanceData.filter(d => d.officeId === officeId);
+
+    // Get unique weeks sorted
+    const weekSet = new Set(officeData.map(d => d.weekStart));
+    const sortedWeeks = Array.from(weekSet).sort();
+
+    // Take last 8 weeks
+    const last8 = sortedWeeks.slice(-8);
+    const curves = getResponseCurvesForOffice(officeId);
+
+    // First pass: collect raw actuals and raw predicted
+    const rawData = last8.map(week => {
+        const weekRows = officeData.filter(d => d.weekStart === week);
+        const totalSpend = weekRows.reduce((sum, d) => sum + d.spend, 0);
+
+        const gs = weekRows.find(d => d.channel === 'Google_Search');
+        const mt = weekRows.find(d => d.channel === 'Meta');
+        const pr = weekRows.find(d => d.channel === 'Google_Programmatic');
+
+        const gsCurve = curves.find((c: any) => c.channel === 'Google_Search');
+        const mtCurve = curves.find((c: any) => c.channel === 'Meta');
+        const prCurve = curves.find((c: any) => c.channel === 'Google_Programmatic');
+
+        const gsActual = gs?.conversionsIncremental || 0;
+        const mtActual = mt?.conversionsIncremental || 0;
+        const prActual = pr?.conversionsIncremental || 0;
+
+        const gsSpend = gs?.spend || 0;
+        const mtSpend = mt?.spend || 0;
+        const prSpend = pr?.spend || 0;
+
+        const gsRawPred = gsCurve ? hillFunction(gsSpend, gsCurve.K, gsCurve.beta, gsCurve.n) : 0;
+        const mtRawPred = mtCurve ? hillFunction(mtSpend, mtCurve.K, mtCurve.beta, mtCurve.n) : 0;
+        const prRawPred = prCurve ? hillFunction(prSpend, prCurve.K, prCurve.beta, prCurve.n) : 0;
+
+        // Format date label
+        const date = new Date(week + 'T00:00:00');
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const dateLabel = `${months[date.getMonth()]} ${date.getDate()}`;
+        const spendLabel = `$${(totalSpend / 1000).toFixed(1)}K`;
+
+        return {
+            weekStart: week,
+            dateLabel,
+            spendLabel,
+            totalSpend,
+            gsSpend, gsActual, gsRawPred,
+            mtSpend, mtActual, mtRawPred,
+            prSpend, prActual, prRawPred,
+        };
+    });
+
+    // Calculate calibration multipliers for each channel so the Hill curve fits the data scale
+    const calcMultiplier = (actuals: number[], preds: number[]) => {
+        const sumActual = actuals.reduce((a, b) => a + b, 0);
+        const sumPred = preds.reduce((a, b) => a + b, 0);
+        if (sumPred === 0) return 1;
+        return sumActual / sumPred;
+    };
+
+    const gsMultiplier = calcMultiplier(rawData.map(d => d.gsActual), rawData.map(d => d.gsRawPred));
+    const mtMultiplier = calcMultiplier(rawData.map(d => d.mtActual), rawData.map(d => d.mtRawPred));
+    const prMultiplier = calcMultiplier(rawData.map(d => d.prActual), rawData.map(d => d.prRawPred));
+
+    return rawData.map(d => {
+        return {
+            weekStart: d.weekStart,
+            dateLabel: d.dateLabel,
+            spendLabel: d.spendLabel,
+            totalSpend: d.totalSpend,
+
+            googleSearchSpend: d.gsSpend,
+            googleSearchPredicted: Math.round(d.gsRawPred * gsMultiplier),
+            googleSearchActual: d.gsActual,
+
+            metaSpend: d.mtSpend,
+            metaPredicted: Math.round(d.mtRawPred * mtMultiplier),
+            metaActual: d.mtActual,
+
+            programmaticSpend: d.prSpend,
+            programmaticPredicted: Math.round(d.prRawPred * prMultiplier),
+            programmaticActual: d.prActual,
+        };
+    });
+}
+
