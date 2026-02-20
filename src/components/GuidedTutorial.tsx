@@ -131,7 +131,7 @@ export default function GuidedTutorial() {
 
     // Only run on client mounting
     useEffect(() => {
-        setMounted(true);
+        requestAnimationFrame(() => setMounted(true));
         const hasSeenTutorial = localStorage.getItem('hasSeenTutorial');
         if (!hasSeenTutorial) {
             setTimeout(() => {
@@ -152,7 +152,7 @@ export default function GuidedTutorial() {
     // Reset step index whenever tour starts
     useEffect(() => {
         if (isTutorialRunning) {
-            setStepIndex(0);
+            requestAnimationFrame(() => setStepIndex(0));
         }
     }, [isTutorialRunning]);
 
@@ -193,7 +193,7 @@ export default function GuidedTutorial() {
                 setCenterView('trends');
             } else if (nextTarget === '.tour-office-sidebar') {
                 setCenterView('dashboard');
-                setSidebarOpen && setSidebarOpen(true);
+                setSidebarOpen?.(true);
             } else if (
                 nextTarget === '.tour-kpi-strip' ||
                 nextTarget === '.tour-admin-integrations' ||

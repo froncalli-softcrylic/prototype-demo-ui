@@ -27,7 +27,8 @@ const ActualDot = ({ cx, cy, fill }: { cx?: number; cy?: number; fill: string })
 };
 
 // Custom tooltip
-const CustomTooltip = ({ active, payload, label }: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const CustomTooltip = ({ active, payload }: any) => {
     if (!active || !payload?.length) return null;
 
     // Find the first payload item to extract spendLabel or totalSpend if needed
@@ -56,7 +57,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
                 const spendKey = `${chKey}Spend`;
 
                 // See if this channel is in payload (i.e. active)
-                const hasData = payload.some((p: any) => p.dataKey === predKey || p.dataKey === actKey);
+                const hasData = payload.some((p: { dataKey?: string }) => p.dataKey === predKey || p.dataKey === actKey);
                 if (!hasData) return null;
 
                 return (
@@ -93,8 +94,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 // Custom multi-line X-Axis tick
-const CustomizedAxisTick = (props: any) => {
+const CustomizedAxisTick = (props: { x?: number; y?: number; payload?: { value: string } }) => {
     const { x, y, payload } = props;
+    if (!payload?.value) return null;
     // We expect payload.value to match the dateLabel
     // Recharts passes the single tick string. If we format it with a newline or just lookup the data array
     // Here we assume getWeeklyMMMPerformance returns `dateLabel` for XAxis, so value == dateLabel.
@@ -314,7 +316,7 @@ export default function ResponseCurveChart({ officeId }: Props) {
                                     stroke={cfg.color}
                                     strokeWidth={1.5}
                                     strokeDasharray="6 4"
-                                    dot={(props: any) => <ActualDot {...props} fill={cfg.color} />}
+                                    dot={(props: { cx?: number; cy?: number }) => <ActualDot {...props} fill={cfg.color} />}
                                     activeDot={{ r: 6, fill: cfg.color, stroke: '#fff', strokeWidth: 2 }}
                                     name={`${cfg.label} Actual`}
                                 />

@@ -89,7 +89,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
     // Ref to access latest chatMessages without re-creating sendChatMessage on every message
     const chatMessagesRef = useRef(chatMessages);
-    chatMessagesRef.current = chatMessages;
+    React.useEffect(() => {
+        chatMessagesRef.current = chatMessages;
+    }, [chatMessages]);
 
     // Apply theme to document element
     React.useEffect(() => {

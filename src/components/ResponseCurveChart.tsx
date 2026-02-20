@@ -2,15 +2,14 @@
 
 import { useMemo, useState } from 'react';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-    ReferenceLine, ReferenceDot, Area, Legend, ComposedChart, Label,
+    Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+    ReferenceLine, ReferenceDot, Area, ComposedChart,
 } from 'recharts';
 import { Info } from 'lucide-react';
-import { getResponseCurvesForOffice, generateCurvePoints, hillFunction, type ResponseCurveParams } from '@/data/response-curves';
+import { getResponseCurvesForOffice, hillFunction } from '@/data/response-curves';
 
 interface Props {
     officeId: number;
-    cpaTarget?: number;
 }
 
 const channelConfig: Record<string, { color: string; label: string }> = {
@@ -19,7 +18,7 @@ const channelConfig: Record<string, { color: string; label: string }> = {
     Google_Programmatic: { color: '#00D084', label: 'Programmatic' },
 };
 
-const CustomDot = (props: any) => {
+const CustomDot = (props: { cx?: number; cy?: number; fill?: string; stroke?: string; strokeWidth?: number; r?: number; desc?: string }) => {
     const { cx, cy, fill, stroke, strokeWidth, r, desc } = props;
     if (cx == null || cy == null) return null;
     return (
@@ -80,7 +79,7 @@ const LegendTooltip = ({ text, dotClass, description }: { text: string; dotClass
     );
 };
 
-export default function ResponseCurveChart({ officeId, cpaTarget }: Props) {
+export default function ResponseCurveChart({ officeId }: Props) {
     const curves = getResponseCurvesForOffice(officeId);
     const [activeChannels, setActiveChannels] = useState<Set<string>>(
         new Set(curves.map(c => c.channel))
@@ -131,6 +130,12 @@ export default function ResponseCurveChart({ officeId, cpaTarget }: Props) {
     };
 
     const activeCurves = curves.filter(c => activeChannels.has(c.channel));
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const tooltipFormatter = (value: any, name: any) => {
+        const cfg = channelConfig[String(name)];
+        return [Number(value).toFixed(1) + ' bookings', cfg?.label || String(name)];
+    };
 
     return (
         <div className="chart-section">
@@ -184,11 +189,7 @@ export default function ResponseCurveChart({ officeId, cpaTarget }: Props) {
                         }}
                         itemStyle={{ color: 'var(--charcoal)' }}
                         labelStyle={{ color: 'var(--charcoal)' }}
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        formatter={(value: any, name: any) => {
-                            const cfg = channelConfig[String(name)];
-                            return [Number(value).toFixed(1) + ' bookings', cfg?.label || String(name)];
-                        }}
+                        formatter={tooltipFormatter}
                         labelFormatter={(label) => `Spend: ${formatSpend(Number(label))}`}
                     />
 

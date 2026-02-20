@@ -2,21 +2,10 @@
 
 import { useApp } from '@/context/AppContext';
 import { getInvestmentStatus } from '@/data/offices';
-import { getResponseCurvesForOffice } from '@/data/response-curves';
 import ResponseCurveChart from './ResponseCurveChart';
 import NewResponseCurveChart from './NewResponseCurveChart';
 import RecommendationCard from './RecommendationCard';
 import OfficeSchedule from './OfficeSchedule'; // Added import for OfficeSchedule
-
-const channelConfig: Record<string, { color: string; label: string }> = {
-    Google_Search: { color: '#0074B0', label: 'GOOGLE SEARCH' },
-    Meta: { color: '#9B51E0', label: 'META' },
-    Google_Programmatic: { color: '#00D084', label: 'PROGRAMMATIC' },
-};
-
-function formatDollar(val: number): string {
-    return `$${val.toLocaleString()}`;
-}
 
 export default function OfficeDetail() {
     const { selectedOffice, selectOffice, getOfficeRecommendations } = useApp();
@@ -24,7 +13,6 @@ export default function OfficeDetail() {
     if (!selectedOffice) return null;
 
     const status = getInvestmentStatus(selectedOffice);
-    const curves = getResponseCurvesForOffice(selectedOffice.officeId);
     const recs = getOfficeRecommendations(selectedOffice.officeId);
     const capPct = Math.round(selectedOffice.capacityUtilBaseline * 100);
     const capClass = capPct >= 80 ? 'high' : capPct >= 67 ? 'medium' : 'low';
@@ -67,7 +55,7 @@ export default function OfficeDetail() {
             </div>
 
             {/* Response Curves */}
-            <ResponseCurveChart officeId={selectedOffice.officeId} cpaTarget={selectedOffice.cpaTarget} />
+            <ResponseCurveChart officeId={selectedOffice.officeId} />
 
             <div style={{ marginTop: 24 }}>
                 <NewResponseCurveChart officeId={selectedOffice.officeId} />

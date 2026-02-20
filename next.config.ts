@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  outputFileTracingIncludes: {
+    '/api/**/*': ['./Heartland_Synthetic_Media_Data_ALL.md'],
+  },
 };
 
 export default nextConfig;

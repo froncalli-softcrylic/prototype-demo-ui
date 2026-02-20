@@ -52,7 +52,7 @@ export default function PerformanceAnalytics() {
         // If an office is selected, we ideally want to fetch data just for that office.
         // For now, since the API parses Section 3 which doesn't easily expose channel data PER office across all rows,
         // we'll use the API for all-offices and just mock/rely on the fact that if an office is selected, you don't even show this chart!
-        return rawApiData.channels;
+        return rawApiData.channels || [];
     }, [rawApiData]);
 
     // Only show office data if looking at "All Markets"
@@ -60,7 +60,7 @@ export default function PerformanceAnalytics() {
 
     const officeData = useMemo(() => {
         if (!rawApiData) return [];
-        return rawApiData.offices;
+        return rawApiData.offices || [];
     }, [rawApiData]);
 
     const tooltipStyle = {

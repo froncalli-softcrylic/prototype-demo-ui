@@ -10,7 +10,6 @@ interface Props {
 
 export default function RecommendationCard({ recommendation: rec }: Props) {
     const { approveRecommendation, rejectRecommendation, modifyRecommendation } = useApp();
-    const [expanded, setExpanded] = useState(false);
     const [modifying, setModifying] = useState(false);
     const [modifiedSpend, setModifiedSpend] = useState(rec.recommendedSpend);
 

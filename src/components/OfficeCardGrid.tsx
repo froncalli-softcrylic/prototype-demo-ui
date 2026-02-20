@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { type Office, getInvestmentStatus } from '@/data/offices';
 import { getResponseCurvesForOffice } from '@/data/response-curves';
-import { MapPin, Activity, ArrowRight, ShieldCheck } from 'lucide-react';
+import { MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
 
 function formatDollar(val: number): string {
     if (Math.abs(val) >= 1000) return `$${(val / 1000).toFixed(1)}K`;
@@ -30,7 +30,6 @@ function OfficeCard({ office }: { office: Office }) {
 
     const totalCurrent = curves.reduce((s, c) => s + c.currentSpend, 0);
     const totalRecommended = curves.reduce((s, c) => s + c.optimalSpend, 0);
-    const totalDelta = totalRecommended - totalCurrent;
 
     return (
         <div className={`office-card ${status}`} onClick={() => selectOffice(office.officeId)}>

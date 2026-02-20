@@ -1,7 +1,7 @@
 'use client';
 
 import { useApp, type MarketFilter, type StatusFilter } from '@/context/AppContext';
-import { getInvestmentStatus, type Office } from '@/data/offices';
+import { getInvestmentStatus } from '@/data/offices';
 
 function formatSpend(val: number): string {
     if (val >= 1000) return `$${(val / 1000).toFixed(1)}K`;

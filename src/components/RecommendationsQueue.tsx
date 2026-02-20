@@ -7,14 +7,8 @@ import RecommendationCard from './RecommendationCard';
 type SortField = 'officeName' | 'channel' | 'action' | 'currentSpend' | 'recommendedSpend' | 'delta' | 'confidence' | 'status';
 type QueueFilter = 'all' | 'pending' | 'approved' | 'rejected';
 
-const channelLabels: Record<string, string> = {
-    Google_Search: 'Google Search',
-    Meta: 'Meta',
-    Google_Programmatic: 'Programmatic',
-};
-
 export default function RecommendationsQueue() {
-    const { recommendations, approveRecommendation, rejectRecommendation, bulkApprove, bulkReject } = useApp();
+    const { recommendations, bulkApprove, bulkReject } = useApp();
     const [sortField, setSortField] = useState<SortField>('officeName');
     const [sortAsc, setSortAsc] = useState(true);
     const [filter, setFilter] = useState<QueueFilter>('all');
@@ -34,17 +28,7 @@ export default function RecommendationsQueue() {
         return sortAsc ? cmp : -cmp;
     });
 
-    const handleSort = (field: SortField) => {
-        if (sortField === field) setSortAsc(!sortAsc);
-        else { setSortField(field); setSortAsc(true); }
-    };
-
     const pendingCount = recommendations.filter(r => r.status === 'pending').length;
-
-    const sortIndicator = (field: SortField) => {
-        if (sortField !== field) return '';
-        return sortAsc ? ' ↑' : ' ↓';
-    };
 
     return (
         <div>

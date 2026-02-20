@@ -13,7 +13,7 @@ import PerformanceTrends from '@/components/PerformanceTrends';
 import GuidedTutorial from '@/components/GuidedTutorial';
 
 function CenterPanel() {
-  const { centerView, setCenterView, pendingRecommendationsCount, selectedOfficeId } = useApp();
+  const { centerView, setCenterView, pendingRecommendationsCount } = useApp();
 
   // If in detail mode, don't show tabs
   if (centerView === 'detail') {

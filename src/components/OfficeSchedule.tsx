@@ -1,15 +1,15 @@
 'use client';
 
 import { useApp } from '@/context/AppContext';
-import { getWeeklyScheduleAverage, ScheduleDayAverage } from '@/data/schedule-data';
+import { getWeeklyScheduleAverage } from '@/data/schedule-data';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, LabelList } from 'recharts';
 import { CalendarClock } from 'lucide-react';
 
 // Custom Tooltip for Stacked Bar Chart
-const CustomScheduleTooltip = ({ active, payload, label }: any) => {
+const CustomScheduleTooltip = ({ active, payload, label }: { active?: boolean; payload?: { dataKey: string; value: number }[]; label?: string }) => {
     if (active && payload && payload.length) {
-        const booked = payload.find((p: any) => p.dataKey === 'avgBooked')?.value || 0;
-        const open = payload.find((p: any) => p.dataKey === 'avgOpen')?.value || 0;
+        const booked = payload.find((p) => p.dataKey === 'avgBooked')?.value || 0;
+        const open = payload.find((p) => p.dataKey === 'avgOpen')?.value || 0;
         const total = booked + open;
         const utilPct = total > 0 ? Math.round((booked / total) * 100) : 0;
 
@@ -70,6 +70,9 @@ export default function OfficeSchedule() {
     const totalWeeklySlots = chartData.reduce((s, d) => s + d.maxSlots, 0);
     const totalWeeklyBooked = chartData.reduce((s, d) => s + d.avgBooked, 0);
     const overallUtil = totalWeeklySlots > 0 ? Math.round((totalWeeklyBooked / totalWeeklySlots) * 100) : 0;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const formatLabel = (val: any) => Number(val) > 0 ? val : '';
 
     return (
         <div style={{
@@ -152,7 +155,7 @@ export default function OfficeSchedule() {
                                 fill="var(--heartland-blue)"
                                 radius={[0, 0, 4, 4]}
                             >
-                                <LabelList dataKey="avgBooked" position="center" fill="#FFFFFF" fontSize={11} fontWeight={600} formatter={(val: any) => val > 0 ? val : ''} />
+                                <LabelList dataKey="avgBooked" position="center" fill="#FFFFFF" fontSize={11} fontWeight={600} formatter={formatLabel} />
                             </Bar>
                             <Bar
                                 dataKey="avgOpen"
@@ -161,7 +164,7 @@ export default function OfficeSchedule() {
                                 fill="var(--chart-open-fill)"
                                 radius={[4, 4, 0, 0]}
                             >
-                                <LabelList dataKey="avgOpen" position="top" fill="var(--charcoal)" fontSize={11} fontWeight={600} formatter={(val: any) => val > 0 ? val : ''} offset={5} />
+                                <LabelList dataKey="avgOpen" position="top" fill="var(--charcoal)" fontSize={11} fontWeight={600} formatter={formatLabel} offset={5} />
                             </Bar>
                         </BarChart>
                     </ResponsiveContainer>
