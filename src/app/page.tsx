@@ -48,18 +48,24 @@ function CenterPanel() {
         >
           Performance
         </button>
+        <button
+          className={`center-tab ${centerView === 'admin' ? 'active' : ''}`}
+          onClick={() => setCenterView('admin')}
+        >
+          Admin Integrations
+        </button>
       </div>
 
       {centerView === 'dashboard' && (
         <>
           <SummaryStrip />
           <OfficeCardGrid />
-          <AdminIntegrations />
         </>
       )}
 
       {centerView === 'recommendations' && <RecommendationsQueue />}
       {centerView === 'trends' && <PerformanceTrends />}
+      {centerView === 'admin' && <AdminIntegrations />}
     </div>
   );
 }

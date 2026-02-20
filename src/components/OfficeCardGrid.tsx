@@ -4,9 +4,7 @@ import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { type Office, getInvestmentStatus } from '@/data/offices';
 import { getResponseCurvesForOffice } from '@/data/response-curves';
-import { getAggregatedWeeklyTrends } from '@/data/weekly-performance';
 import { MapPin, Activity, ArrowRight, ShieldCheck } from 'lucide-react';
-import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 
 function formatDollar(val: number): string {
     if (Math.abs(val) >= 1000) return `$${(val / 1000).toFixed(1)}K`;
@@ -96,27 +94,8 @@ function OfficeCard({ office }: { office: Office }) {
                 })}
             </div>
 
-            {/* Sparkline Chart to fill space and add visual interest */}
-            <div style={{ height: 60, width: '100%', marginTop: 'auto', margin: '0 -24px -24px -24px', padding: '0 12px' }}>
-                <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={getAggregatedWeeklyTrends(office.officeId).slice(-12)}>
-                        <defs>
-                            <linearGradient id={`gradient-${office.officeId}`} x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="var(--heartland-blue)" stopOpacity={0.2} />
-                                <stop offset="95%" stopColor="var(--heartland-blue)" stopOpacity={0} />
-                            </linearGradient>
-                        </defs>
-                        <Area
-                            type="monotone"
-                            dataKey="totalSpend"
-                            stroke="var(--heartland-blue)"
-                            strokeWidth={2}
-                            fillOpacity={1}
-                            fill={`url(#gradient-${office.officeId})`}
-                        />
-                    </AreaChart>
-                </ResponsiveContainer>
-            </div>
+            {/* Animated hover element */}
+            <div className="card-hover-animation" />
         </div>
     );
 }

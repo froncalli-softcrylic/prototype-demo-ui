@@ -4,6 +4,7 @@ import { useApp } from '@/context/AppContext';
 import { getInvestmentStatus } from '@/data/offices';
 import { getResponseCurvesForOffice } from '@/data/response-curves';
 import ResponseCurveChart from './ResponseCurveChart';
+import NewResponseCurveChart from './NewResponseCurveChart';
 import RecommendationCard from './RecommendationCard';
 import OfficeSchedule from './OfficeSchedule'; // Added import for OfficeSchedule
 
@@ -67,6 +68,10 @@ export default function OfficeDetail() {
 
             {/* Response Curves */}
             <ResponseCurveChart officeId={selectedOffice.officeId} cpaTarget={selectedOffice.cpaTarget} />
+
+            <div style={{ marginTop: 24 }}>
+                <NewResponseCurveChart officeId={selectedOffice.officeId} />
+            </div>
 
             {/* Agent Recommendations */}
             {recs.length > 0 && (

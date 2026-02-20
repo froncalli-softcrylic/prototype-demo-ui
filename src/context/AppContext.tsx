@@ -5,7 +5,7 @@ import { type Office, offices, getInvestmentStatus } from '@/data/offices';
 import { initialRecommendations, type Recommendation } from '@/data/recommendations';
 import { type ChatMessage } from '@/data/chat-scripts';
 
-export type CenterView = 'dashboard' | 'detail' | 'recommendations' | 'trends';
+export type CenterView = 'dashboard' | 'detail' | 'recommendations' | 'trends' | 'admin';
 export type TimeRange = 'this-week' | '14-days' | '30-days' | '90-days';
 export type MarketFilter = 'all' | 'Florida' | 'New York';
 export type StatusFilter = 'all' | 'over-invested' | 'under-invested' | 'optimal';

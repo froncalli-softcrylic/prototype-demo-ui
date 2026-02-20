@@ -1,17 +1,35 @@
 'use client';
 
 import { useApp } from '@/context/AppContext';
-import { offices } from '@/data/offices';
 import { DollarSign, Activity, Target, CalendarDays, Percent, AlignLeft } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export default function SummaryStrip() {
     const { recommendations } = useApp();
+    const [summaryData, setSummaryData] = useState<{
+        totalWeeklySpend: number;
+        totalWeeklyBookings: number;
+        avgCPAObserved: number;
+        avgCPAIncremental: number;
+        avgCapacityUtil: number;
+    } | null>(null);
 
-    const totalWeeklySpend = offices.reduce((s, o) => s + o.avgWeeklySpendTotal, 0);
-    const totalBookings = Math.round(totalWeeklySpend / 115);
-    const avgCPAObserved = totalBookings > 0 ? totalWeeklySpend / totalBookings : 0;
-    const avgCPAIncremental = avgCPAObserved * 1.44;
-    const avgCapacity = offices.reduce((s, o) => s + o.capacityUtilBaseline, 0) / offices.length;
+    useEffect(() => {
+        fetch('/api/performance-kpis')
+            .then(res => res.json())
+            .then(data => {
+                if (data.summary) {
+                    setSummaryData(data.summary);
+                }
+            })
+            .catch(e => console.error("Failed to fetch summary data", e));
+    }, []);
+
+    const totalWeeklySpend = summaryData?.totalWeeklySpend || 0;
+    const totalBookings = summaryData?.totalWeeklyBookings || 0;
+    const avgCPAObserved = summaryData?.avgCPAObserved || 0;
+    const avgCPAIncremental = summaryData?.avgCPAIncremental || 0;
+    const avgCapacity = summaryData?.avgCapacityUtil || 0;
     const pendingCount = recommendations.filter(r => r.status === 'pending').length;
 
     return (

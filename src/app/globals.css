@@ -946,6 +946,32 @@ body {
 .office-card.under-invested { border-top-color: var(--heartland-blue); }
 .office-card.optimal { border-top-color: var(--success); }
 
+/* Hover Animation Element */
+.card-hover-animation {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--heartland-blue), var(--channel-meta), var(--channel-programmatic), var(--heartland-blue));
+  background-size: 300% 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  opacity: 0;
+}
+
+.office-card:hover .card-hover-animation {
+  transform: scaleX(1);
+  opacity: 1;
+  animation: bg-shift 3s linear infinite;
+}
+
+@keyframes bg-shift {
+  0% { background-position: 0% 0; }
+  100% { background-position: -300% 0; }
+}
+
 .office-card-header {
   display: flex;
   justify-content: space-between;
