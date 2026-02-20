@@ -1337,123 +1337,189 @@ body {
 .incrementality-badge.mid { background: rgba(0,116,176,0.1); color: var(--heartland-blue); }
 .incrementality-badge.low { background: rgba(252,185,0,0.1); color: #b8860b; }
 
-/* ===== RECOMMENDATION CARD ===== */
+/* ===== RECOMMENDATION CARD (MODERN) ===== */
+.rec-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .rec-card {
   background: var(--white);
-  border: 1px solid rgba(0,0,0,0.04);
+  border: 1px solid var(--border-gray);
   border-left: 4px solid var(--heartland-blue);
   border-radius: var(--radius-md);
-  padding: 24px;
+  padding: 20px 24px;
   box-shadow: var(--shadow-sm);
-  margin-bottom: 16px;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  gap: 24px;
+  align-items: center;
 }
 
 .rec-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  border-color: rgba(0, 116, 176, 0.2);
 }
 
 .rec-card.approved {
   border-left-color: var(--success);
   opacity: 0.65;
+  background: rgba(0, 208, 132, 0.02);
 }
 
 .rec-card.rejected {
   border-left-color: var(--danger);
   opacity: 0.5;
+  background: rgba(220, 38, 38, 0.02);
 }
 
-.rec-card-header {
+/* Card layout sections */
+.rec-card-hero {
+  flex: 1;
+  min-width: 250px;
+}
+
+.rec-card-flow {
+  flex: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 200px;
 }
 
+.rec-card-actions-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  min-width: 200px;
+}
+
+/* Typography elements */
 .rec-card-title {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.rec-card-timestamp {
-  font-size: 11px;
-  color: var(--medium-gray);
-  font-family: var(--font-mono);
-}
-
-.rec-card-body {
-  font-size: 14px;
-  line-height: 1.6;
   color: var(--charcoal);
-  margin-bottom: 16px;
-}
-
-.rec-card-confidence {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.rec-card-subtitle {
+  font-size: 13px;
   color: var(--medium-gray);
   margin-bottom: 12px;
 }
 
-.confidence-bar {
-  width: 100px;
-  height: 6px;
-  background: var(--lighter-gray);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.confidence-bar-fill {
-  height: 100%;
-  border-radius: 3px;
-  background: var(--success);
-}
-
-.rec-card-expand {
+.rec-card-channel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
   font-size: 12px;
-  color: var(--heartland-blue);
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-family: var(--font-sans);
   font-weight: 600;
-  margin-bottom: 16px;
+  background: var(--bg-app);
+  border: 1px solid var(--border-gray);
+}
+
+.rec-card-channel-badge.google { color: var(--channel-google); border-color: rgba(66, 133, 244, 0.2); background: rgba(66, 133, 244, 0.05); }
+.rec-card-channel-badge.meta { color: var(--channel-meta); border-color: rgba(24, 119, 242, 0.2); background: rgba(24, 119, 242, 0.05); }
+.rec-card-channel-badge.prog { color: var(--channel-programmatic); border-color: rgba(139, 92, 246, 0.2); background: rgba(139, 92, 246, 0.05); }
+
+/* Budget Flow */
+.budget-flow {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 12px;
+  background: var(--light-gray);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
 }
-.rec-card-expand:hover { text-decoration: underline; }
 
-.rec-card-reasoning {
+.budget-amount {
+  font-size: 18px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--charcoal);
+}
+
+.budget-amount.old {
+  color: var(--medium-gray);
+}
+
+.budget-arrow {
+  color: var(--medium-gray);
+  display: flex;
+  align-items: center;
+}
+
+.budget-delta-badge {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  margin-left: auto;
+}
+.budget-delta-badge.positive { background: rgba(0, 208, 132, 0.1); color: var(--success); }
+.budget-delta-badge.negative { background: rgba(220, 38, 38, 0.1); color: var(--danger); }
+
+/* Rationale inline */
+.rec-card-rationale {
   font-size: 13px;
   line-height: 1.5;
   color: var(--medium-gray);
-  padding: 12px 16px;
-  background: var(--light-gray);
-  border-radius: var(--radius-sm);
-  margin-bottom: 16px;
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.rec-card-rationale svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--heartland-blue);
+}
+
+/* Impact & Confidence Pills */
+.rec-impact-pills {
+  display: flex;
+  gap: 8px;
+}
+
+.impact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-gray);
+}
+
+.impact-pill.success { border-color: rgba(0, 208, 132, 0.2); background: rgba(0, 208, 132, 0.05); color: var(--success); }
+.impact-pill.danger { border-color: rgba(220, 38, 38, 0.2); background: rgba(220, 38, 38, 0.05); color: var(--danger); }
+
+.rec-card-status {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-app);
 }
 
 .rec-card-actions {
   display: flex;
   gap: 8px;
   align-items: center;
-}
-
-.rec-card-status {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 700;
 }
 
 /* ===== RECOMMENDATIONS QUEUE TABLE ===== */

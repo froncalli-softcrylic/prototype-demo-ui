@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
+import RecommendationCard from './RecommendationCard';
 
 type SortField = 'officeName' | 'channel' | 'action' | 'currentSpend' | 'recommendedSpend' | 'delta' | 'confidence' | 'status';
 type QueueFilter = 'all' | 'pending' | 'approved' | 'rejected';
@@ -70,59 +71,11 @@ export default function RecommendationsQueue() {
                 )}
             </div>
 
-            <table className="queue-table">
-                <thead>
-                    <tr>
-                        <th onClick={() => handleSort('officeName')}>Office{sortIndicator('officeName')}</th>
-                        <th onClick={() => handleSort('channel')}>Channel{sortIndicator('channel')}</th>
-                        <th onClick={() => handleSort('action')}>Action{sortIndicator('action')}</th>
-                        <th onClick={() => handleSort('currentSpend')}>Current{sortIndicator('currentSpend')}</th>
-                        <th onClick={() => handleSort('recommendedSpend')}>Recommended{sortIndicator('recommendedSpend')}</th>
-                        <th onClick={() => handleSort('delta')}>Delta{sortIndicator('delta')}</th>
-                        <th>Impact</th>
-                        <th onClick={() => handleSort('confidence')}>Confidence{sortIndicator('confidence')}</th>
-                        <th onClick={() => handleSort('status')}>Status{sortIndicator('status')}</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sorted.map(r => (
-                        <tr key={r.recId}>
-                            <td style={{ fontFamily: 'var(--font-sans)', fontWeight: 600 }}>{r.officeName}</td>
-                            <td>{channelLabels[r.channel] || r.channel}</td>
-                            <td style={{ textTransform: 'capitalize' }}>{r.action}</td>
-                            <td>${r.currentSpend.toLocaleString()}</td>
-                            <td>${r.recommendedSpend.toLocaleString()}</td>
-                            <td style={{ color: r.delta > 0 ? 'var(--success)' : r.delta < 0 ? 'var(--danger)' : 'var(--medium-gray)' }}>
-                                {r.delta > 0 ? '+' : ''}{r.delta < 0 ? '-' : ''}${Math.abs(r.delta).toLocaleString()}
-                            </td>
-                            <td style={{ color: r.projectedBookingsDelta > 0 ? 'var(--success)' : r.projectedBookingsDelta < 0 ? 'var(--danger)' : 'var(--medium-gray)' }}>
-                                {r.projectedBookingsDelta > 0 ? '+' : ''}{r.projectedBookingsDelta} bookings
-                            </td>
-                            <td>
-                                <span className={`incrementality-badge ${r.confidence === 'High' ? 'high' : r.confidence === 'Medium' ? 'mid' : 'low'}`}>
-                                    {r.confidence}
-                                </span>
-                            </td>
-                            <td>
-                                <span className={`queue-status-pill ${r.status}`}>
-                                    {r.status.charAt(0).toUpperCase() + r.status.slice(1)}
-                                </span>
-                            </td>
-                            <td>
-                                {r.status === 'pending' ? (
-                                    <div style={{ display: 'flex', gap: 4 }}>
-                                        <button className="btn btn-approve btn-xs" onClick={() => approveRecommendation(r.recId)}>✓</button>
-                                        <button className="btn btn-reject btn-xs" onClick={() => rejectRecommendation(r.recId)}>✗</button>
-                                    </div>
-                                ) : (
-                                    <span className="text-xs text-gray">—</span>
-                                )}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <div className="rec-grid">
+                {sorted.map(r => (
+                    <RecommendationCard key={r.recId} recommendation={r} />
+                ))}
+            </div>
 
             {sorted.length === 0 && (
                 <div style={{ textAlign: 'center', padding: 40, color: 'var(--medium-gray)' }}>

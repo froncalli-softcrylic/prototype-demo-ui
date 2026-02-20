@@ -14,8 +14,18 @@ export default function RecommendationCard({ recommendation: rec }: Props) {
     const [modifying, setModifying] = useState(false);
     const [modifiedSpend, setModifiedSpend] = useState(rec.recommendedSpend);
 
-    const confidencePct = rec.confidence === 'High' ? 85 : rec.confidence === 'Medium' ? 60 : 35;
     const isActioned = rec.status !== 'pending';
+
+    const getChannelBadgeClass = (channel: string) => {
+        if (channel === 'Google_Search') return 'google';
+        if (channel === 'Meta') return 'meta';
+        if (channel === 'Google_Programmatic') return 'prog';
+        return '';
+    };
+
+    const channelLabel = rec.channel === 'Google_Search' ? 'Google Search'
+        : rec.channel === 'Meta' ? 'Meta Ads'
+            : 'Programmatic';
 
     const handleModifyConfirm = () => {
         modifyRecommendation(rec.recId, modifiedSpend);
@@ -24,82 +34,85 @@ export default function RecommendationCard({ recommendation: rec }: Props) {
 
     return (
         <div className={`rec-card ${rec.status}`}>
-            <div className="rec-card-header">
-                <div className="rec-card-title">
-                    <span>🤖</span>
-                    <span>AGENT RECOMMENDATION</span>
+            {/* Left section: Identity & Channel */}
+            <div className="rec-card-hero">
+                <div className={`rec-card-channel-badge ${getChannelBadgeClass(rec.channel)}`}>
+                    {channelLabel}
                 </div>
-                <div className="rec-card-timestamp">
-                    {new Date(rec.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                    {' · '}
-                    {new Date(rec.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
-                </div>
-            </div>
+                <div style={{ marginTop: 12 }}>
+                    <div className="rec-card-title">{rec.officeName}</div>
+                    <div className="rec-card-subtitle" style={{ margin: 0 }}>ID: {rec.officeId}</div>
 
-            <div className="rec-card-body">
-                {rec.rationale}
-                {rec.projectedBookingsDelta !== 0 && (
-                    <div style={{ marginTop: 8, fontFamily: 'var(--font-mono)', fontSize: 12 }}>
-                        <strong>Projected impact:</strong>{' '}
-                        <span className={rec.projectedBookingsDelta > 0 ? 'text-success' : 'text-danger'}>
-                            {rec.projectedBookingsDelta > 0 ? '+' : ''}{rec.projectedBookingsDelta} bookings/week
-                        </span>
+                    <div className="rec-card-rationale">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <span>{rec.rationale}</span>
                     </div>
-                )}
+                </div>
             </div>
 
-            <div className="rec-card-confidence">
-                <span>Confidence:</span>
-                <div className="confidence-bar">
-                    <div className="confidence-bar-fill" style={{ width: `${confidencePct}%` }} />
+            {/* Middle section: Budget Flow & Impacts */}
+            <div className="rec-card-flow">
+                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--medium-gray)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Weekly Spend Optimization
                 </div>
-                <span style={{ fontWeight: 700 }}>{rec.confidence}</span>
+
+                <div className="budget-flow">
+                    <span className="budget-amount old">${rec.currentSpend.toLocaleString()}</span>
+                    <span className="budget-arrow">→</span>
+                    <span className="budget-amount">${rec.recommendedSpend.toLocaleString()}</span>
+                    <span className={`budget-delta-badge ${rec.delta > 0 ? 'positive' : 'negative'}`}>
+                        {rec.delta > 0 ? '+' : ''}{rec.delta < 0 ? '-' : ''}${Math.abs(rec.delta).toLocaleString()}
+                    </span>
+                </div>
+
+                <div className="rec-impact-pills" style={{ marginTop: 4 }}>
+                    <span className={`impact-pill ${rec.projectedBookingsDelta > 0 ? 'success' : 'danger'}`}>
+                        {rec.projectedBookingsDelta > 0 ? '+' : ''}{rec.projectedBookingsDelta} bookings
+                    </span>
+                    <span className={`impact-pill`} style={{ borderColor: 'var(--border-gray)', background: 'var(--bg-app)', color: 'var(--medium-gray)' }}>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        {rec.confidence} Confidence
+                    </span>
+                </div>
             </div>
 
-            <button className="rec-card-expand" onClick={() => setExpanded(!expanded)}>
-                {expanded ? '▼' : '▶'} Why this recommendation?
-            </button>
-
-            {expanded && (
-                <div className="rec-card-reasoning">
-                    <strong>Data inputs:</strong> Office capacity ({rec.officeName}), response curve position ({rec.channel}), scheduling data (7-day open slots), incrementality rate.<br /><br />
-                    <strong>Rule triggered:</strong> {rec.action === 'increase' ? 'Capacity + Schedule — under-utilized office with open slots' : 'CPA Optimization — past diminishing returns threshold on response curve'}<br /><br />
-                    <strong>Current spend position:</strong> {rec.action === 'increase' ? 'Below optimal on response curve — efficient marginal CPA' : 'Past half-saturation point — diminishing returns detected'}
+            {/* Right section: Actions */}
+            <div className="rec-card-actions-area">
+                <div className="rec-card-timestamp">
+                    {new Date(rec.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} at {new Date(rec.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
                 </div>
-            )}
 
-            {modifying && (
-                <div style={{ marginBottom: 16, display: 'flex', alignItems: 'center', gap: 12, fontFamily: 'var(--font-mono)', fontSize: 12 }}>
-                    <span>Modified spend:</span>
-                    <span>$</span>
-                    <input
-                        type="number"
-                        value={modifiedSpend}
-                        onChange={e => setModifiedSpend(Number(e.target.value))}
-                        style={{
-                            width: 100,
-                            fontFamily: 'var(--font-mono)',
-                            fontSize: 13,
-                            padding: '4px 8px',
-                            border: '1px solid var(--border-gray)',
-                            borderRadius: 'var(--radius-sm)',
-                        }}
-                    />
-                    <span>/wk</span>
-                    <button className="btn btn-primary btn-sm" onClick={handleModifyConfirm}>Confirm</button>
-                    <button className="btn btn-modify btn-sm" onClick={() => setModifying(false)}>Cancel</button>
-                </div>
-            )}
-
-            <div className="rec-card-actions">
                 {isActioned ? (
                     <div className="rec-card-status">
-                        {rec.status === 'approved' && <><span style={{ color: 'var(--success)' }}>✓</span> Approved</>}
-                        {rec.status === 'rejected' && <><span style={{ color: 'var(--danger)' }}>✗</span> Rejected</>}
-                        {rec.status === 'modified' && <><span style={{ color: 'var(--heartland-blue)' }}>✎</span> Modified to ${rec.recommendedSpend.toLocaleString()}/wk</>}
+                        {rec.status === 'approved' && <><span style={{ color: 'var(--success)', marginRight: 6 }}>✓</span> Approved</>}
+                        {rec.status === 'rejected' && <><span style={{ color: 'var(--danger)', marginRight: 6 }}>✗</span> Rejected</>}
+                        {rec.status === 'modified' && <><span style={{ color: 'var(--heartland-blue)', marginRight: 6 }}>✎</span> Modified to ${rec.recommendedSpend.toLocaleString()}</>}
+                    </div>
+                ) : modifying ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-end', background: 'var(--light-gray)', padding: 12, borderRadius: 8 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                            <span style={{ fontSize: 13, fontFamily: 'var(--font-mono)' }}>$</span>
+                            <input
+                                type="number"
+                                value={modifiedSpend}
+                                onChange={e => setModifiedSpend(Number(e.target.value))}
+                                style={{
+                                    width: 80,
+                                    fontFamily: 'var(--font-mono)',
+                                    fontSize: 13,
+                                    padding: '4px 8px',
+                                    border: '1px solid var(--border-gray)',
+                                    borderRadius: 'var(--radius-sm)',
+                                }}
+                            />
+                        </div>
+                        <div style={{ display: 'flex', gap: 4 }}>
+                            <button className="btn btn-modify btn-xs" onClick={() => setModifying(false)}>Cancel</button>
+                            <button className="btn btn-primary btn-xs" onClick={handleModifyConfirm}>Save</button>
+                        </div>
                     </div>
                 ) : (
-                    <>
+                    <div className="rec-card-actions">
                         <button className="btn btn-approve btn-sm" onClick={() => approveRecommendation(rec.recId)}>
                             Approve
                         </button>
@@ -109,7 +122,7 @@ export default function RecommendationCard({ recommendation: rec }: Props) {
                         <button className="btn btn-modify btn-sm" onClick={() => setModifying(true)}>
                             Modify
                         </button>
-                    </>
+                    </div>
                 )}
             </div>
         </div>
