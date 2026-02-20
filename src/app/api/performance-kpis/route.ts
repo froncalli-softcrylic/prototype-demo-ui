@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
+export const dynamic = 'force-static';
+
 export async function GET() {
     try {
         const filePath = path.join(process.cwd(), 'Heartland_Synthetic_Media_Data_ALL.md');
@@ -9,7 +11,7 @@ export async function GET() {
 
         // Extract Section 3: Office-Level Summary (Aggregated)
         // Look for the header, then capture lines until the next section (## 4) or End of File
-        const sectionMatch = fileContent.match(/## 3\. Office-Level Summary \(Aggregated\)([\s\S]*?)(?=\n## 4\.|\Z)/);
+        const sectionMatch = fileContent.match(/## 3\. Office-Level Summary \(Aggregated\)([\s\S]*?)(?=\n## 4\.|[ \t]*$)/);
 
         if (!sectionMatch) {
             return NextResponse.json({ error: 'Data section not found in file' }, { status: 500 });
