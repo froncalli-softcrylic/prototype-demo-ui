@@ -30,8 +30,8 @@ export const tutorialSteps: Step[] = [
         disableBeacon: true,
     },
     {
-        target: '.tour-office-grid',
-        placement: 'top',
+        target: '.tour-office-grid > div:first-child',
+        placement: 'bottom',
         title: 'Individual Office Cards',
         content: 'Each card represents a dental office. You can see their current spend allocation, capacity utilization, and a sparkline of their recent trajectory.',
         disableBeacon: true,

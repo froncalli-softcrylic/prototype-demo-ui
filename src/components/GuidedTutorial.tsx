@@ -152,6 +152,8 @@ export default function GuidedTutorial() {
             disableOverlayClose
             tooltipComponent={CustomTooltip}
             callback={handleJoyrideCallback}
+            scrollOffset={100}
+            floaterProps={{ disableAnimation: true }}
             styles={{
                 options: {
                     zIndex: 10000,
