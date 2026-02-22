@@ -29,7 +29,7 @@ const CustomDot = (props: { cx?: number; cy?: number; fill?: string; stroke?: st
     );
 };
 
-const LegendTooltip = ({ text, dotClass, description }: { text: string; dotClass: string; description: string }) => {
+const LegendTooltip = ({ text, color, description }: { text: string; color: string; description: string }) => {
     const [show, setShow] = useState(false);
     return (
         <span
@@ -38,7 +38,7 @@ const LegendTooltip = ({ text, dotClass, description }: { text: string; dotClass
             onMouseEnter={() => setShow(true)}
             onMouseLeave={() => setShow(false)}
         >
-            <span className={`spend-legend-dot ${dotClass}`} />
+            <span className="spend-legend-dot" style={{ background: color, width: 14, height: 14, borderRadius: '50%', display: 'inline-block' }} />
             {text}
             <Info size={14} style={{ opacity: 0.6, marginLeft: 2 }} />
             {show && (
@@ -248,7 +248,7 @@ export default function ResponseCurveChart({ officeId }: Props) {
                             <ReferenceLine
                                 key={`opt-line-${c.channel}`}
                                 x={c.optimalSpend}
-                                stroke="#10B981"
+                                stroke="#F59E0B"
                                 strokeDasharray="6 3"
                                 strokeOpacity={0.4}
                                 strokeWidth={1}
@@ -293,7 +293,7 @@ export default function ResponseCurveChart({ officeId }: Props) {
                                 shape={(props: any) => (
                                     <CustomDot
                                         {...props}
-                                        fill="#10B981"
+                                        fill="#F59E0B"
                                         stroke="var(--bg-surface)"
                                         strokeWidth={2.5}
                                         r={7}
@@ -308,8 +308,11 @@ export default function ResponseCurveChart({ officeId }: Props) {
 
             {/* Spend comparison panel */}
             <div className="spend-comparison-panel">
-                <div className="spend-comparison-legend">
-                    <LegendTooltip text="Recommended Spend" dotClass="spend-legend-recommended" description="The green dots on the response curve show the AI-recommended optimal weekly spend. Shifting budget to this level is projected to maximize incremental bookings." />
+                <div className="spend-comparison-legend" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '16px' }}>
+                    {Object.entries(channelConfig).map(([key, cfg]) => (
+                        <LegendTooltip key={key} text={cfg.label} color={cfg.color} description={`Response curve for ${cfg.label} showing predicted incremental bookings across spend levels.`} />
+                    ))}
+                    <LegendTooltip text="Recommended Spend" color="#F59E0B" description="The orange dots on the response curve show the AI-recommended optimal weekly spend. Shifting budget to this level is projected to maximize incremental bookings." />
                 </div>
                 <div className="spend-comparison-cards">
                     {activeCurves.map(c => {
@@ -335,7 +338,7 @@ export default function ResponseCurveChart({ officeId }: Props) {
                                     </div>
                                     <div className="spend-compare-col">
                                         <div className="spend-compare-label">Recommended</div>
-                                        <div className="spend-compare-value" style={{ color: '#10B981' }}>
+                                        <div className="spend-compare-value" style={{ color: '#F59E0B' }}>
                                             {formatSpendFull(c.optimalSpend)}<span className="spend-compare-unit">/wk</span>
                                         </div>
                                         <div className="spend-compare-bookings">{optimalBookings.toFixed(1)} bookings</div>
