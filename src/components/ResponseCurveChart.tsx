@@ -308,10 +308,7 @@ export default function ResponseCurveChart({ officeId }: Props) {
 
             {/* Spend comparison panel */}
             <div className="spend-comparison-panel">
-                <div className="spend-comparison-legend" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '16px' }}>
-                    {Object.entries(channelConfig).map(([key, cfg]) => (
-                        <LegendTooltip key={key} text={cfg.label} color={cfg.color} description={`Response curve for ${cfg.label} showing predicted incremental bookings across spend levels.`} />
-                    ))}
+                <div className="spend-comparison-legend" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '16px', justifyContent: 'center' }}>
                     <LegendTooltip text="Recommended Spend" color="#F59E0B" description="The orange dots on the response curve show the AI-recommended optimal weekly spend. Shifting budget to this level is projected to maximize incremental bookings." />
                 </div>
                 <div className="spend-comparison-cards">
