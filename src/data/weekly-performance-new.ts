@@ -2754,8 +2754,24 @@ export function getWeeklyMMMPerformance(officeId: number) {
     const last8 = sortedWeeks.slice(-8);
     const curves = getResponseCurvesForOffice(officeId);
 
+    // Compute dynamic replacement dates relative to today
+    // We want the last element of last8 to map to Monday of the current week
+    const today = new Date();
+    const currentDay = today.getDay();
+    const diffToMonday = currentDay === 0 ? -6 : 1 - currentDay;
+    const latestMonday = new Date(today);
+    latestMonday.setDate(today.getDate() + diffToMonday);
+    latestMonday.setHours(0, 0, 0, 0);
+
+    const dynamicDates = last8.map((_, i) => {
+        const d = new Date(latestMonday);
+        const weeksOffset = i - (last8.length - 1);
+        d.setDate(d.getDate() + (weeksOffset * 7));
+        return d;
+    });
+
     // First pass: collect raw actuals and raw predicted
-    const rawData = last8.map(week => {
+    const rawData = last8.map((week, idx) => {
         const weekRows = officeData.filter(d => d.weekStart === week);
         const totalSpend = weekRows.reduce((sum, d) => sum + d.spend, 0);
 
@@ -2779,14 +2795,19 @@ export function getWeeklyMMMPerformance(officeId: number) {
         const mtRawPred = mtCurve ? hillFunction(mtSpend, mtCurve.K, mtCurve.beta, mtCurve.n) : 0;
         const prRawPred = prCurve ? hillFunction(prSpend, prCurve.K, prCurve.beta, prCurve.n) : 0;
 
-        // Format date label
-        const date = new Date(week + 'T00:00:00');
+        // Format dynamic date label
+        const date = dynamicDates[idx];
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const dateLabel = `${months[date.getMonth()]} ${date.getDate()}`;
         const spendLabel = `$${(totalSpend / 1000).toFixed(1)}K`;
 
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const dd = String(date.getDate()).padStart(2, '0');
+        const dynamicWeekStart = `${yyyy}-${mm}-${dd}`;
+
         return {
-            weekStart: week,
+            weekStart: dynamicWeekStart,
             dateLabel,
             spendLabel,
             totalSpend,
